@@ -1,0 +1,10 @@
+{
+  "name": "donorlink-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DonorLink server-side API: validation, state transitions, matching, notifications and administration.",
+  "main": "src/main.js",
+  "dependencies": {
+    "node-appwrite": "^29.0.0"
+  }
+}
