@@ -1,18 +1,107 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import '@/global.css';
+
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, useFonts } from '@expo-google-fonts/inter';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, type ReactNode } from 'react';
+import { Platform, useColorScheme, View } from 'react-native';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { DonorLinkErrorState } from '@/components/ui/DonorLinkStates';
+import { DonorLinkSkeleton } from '@/components/ui/DonorLinkSkeleton';
+import { AppProviders } from '@/providers/AppProviders';
+import { useAuth } from '@/providers/AuthProvider';
+import { useThemeColors } from '@/theme/useThemeColors';
 
-SplashScreen.preventAutoHideAsync();
+void SplashScreen.preventAutoHideAsync();
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts({ Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold });
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
+    <AppProviders>
+      <StatusBar style="auto" />
+      <PhoneFrame>
+        <RootNavigator fontsReady={fontsLoaded || !!fontError} />
+      </PhoneFrame>
+    </AppProviders>
+  );
+}
+
+/** On the web (development preview only) keep the app at phone width, centred. */
+function PhoneFrame({ children }: { children: ReactNode }) {
+  if (Platform.OS !== 'web') return <>{children}</>;
+  return (
+    <View className="flex-1 items-center bg-subtle">
+      <View className="w-full max-w-[430px] flex-1 overflow-hidden bg-background">{children}</View>
+    </View>
+  );
+}
+
+function RootNavigator({ fontsReady }: { fontsReady: boolean }) {
+  const auth = useAuth();
+  const colors = useThemeColors();
+  const scheme = useColorScheme();
+  const base = scheme === 'dark' ? DarkTheme : DefaultTheme;
+  const navTheme = {
+    ...base,
+    colors: { ...base.colors, background: colors.background, card: colors.surface, text: colors.fg, border: colors.border, primary: colors.primary },
+  };
+  const ready = fontsReady && auth.status !== 'loading';
+
+  useEffect(() => {
+    if (ready) void SplashScreen.hideAsync();
+  }, [ready]);
+
+  if (!ready) {
+    return (
+      <View className="flex-1 items-center justify-center gap-3 bg-background px-10">
+        <DonorLinkSkeleton width={160} height={14} />
+        <DonorLinkSkeleton width={100} height={10} />
+      </View>
+    );
+  }
+
+  if (auth.status === 'error') {
+    return (
+      <View className="flex-1 justify-center bg-background">
+        <DonorLinkErrorState
+          title="We couldn't open DonorLink"
+          message={auth.bootError?.message ?? 'Please check your connection and try again.'}
+          onRetry={() => void auth.retryBoot()}
+        />
+      </View>
+    );
+  }
+
+  const signedOut = auth.status === 'signedOut';
+  const signedIn = auth.status === 'signedIn';
+  const verifyingEmail = signedIn && auth.needsOnboarding && !auth.emailVerified && !auth.emailPromptDismissed;
+  const onboarding = signedIn && auth.needsOnboarding && !verifyingEmail;
+  const inApp = signedIn && !auth.needsOnboarding;
+
+  return (
+    <ThemeProvider value={navTheme}>
+    <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+      <Stack.Protected guard={signedOut || verifyingEmail}>
+        <Stack.Screen name="(auth)" />
+      </Stack.Protected>
+      <Stack.Protected guard={onboarding}>
+        <Stack.Screen name="(onboarding)" />
+      </Stack.Protected>
+      <Stack.Protected guard={inApp}>
+        <Stack.Screen name="(app)" />
+      </Stack.Protected>
+      <Stack.Protected guard={inApp && auth.isOrganizationMember}>
+        <Stack.Screen name="(organization)" />
+      </Stack.Protected>
+      <Stack.Protected guard={inApp && auth.isAdmin}>
+        <Stack.Screen name="(admin)" />
+      </Stack.Protected>
+      <Stack.Protected guard={__DEV__}>
+        <Stack.Screen name="gallery" />
+      </Stack.Protected>
+    </Stack>
     </ThemeProvider>
   );
 }

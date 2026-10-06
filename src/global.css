@@ -1,9 +1,126 @@
-:root {
-  --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
+@import 'nativewind/theme';
+
+/*
+ * DonorLink design tokens.
+ *
+ * Semantic colours are declared once here (light + dark) and mirrored in
+ * src/theme/tokens.ts for the few places that need raw hex values (icons,
+ * status bar, ActivityIndicator). src/theme/__tests__/tokens.test.ts keeps the
+ * two in sync.
+ */
+@layer theme {
+  :root {
+    --dl-background: #f5f7fa;
+    --dl-surface: #ffffff;
+    --dl-elevated: #ffffff;
+    --dl-subtle: #eef2f6;
+    --dl-fg: #0f172a;
+    --dl-fg-secondary: #475569;
+    --dl-fg-muted: #64748b;
+    --dl-border: #e2e8f0;
+    --dl-border-strong: #cbd5e1;
+    --dl-primary: #1d5fd1;
+    --dl-primary-pressed: #164cab;
+    --dl-primary-soft: #e7effc;
+    --dl-primary-foreground: #ffffff;
+    --dl-secondary: #e8edf3;
+    --dl-secondary-foreground: #1e293b;
+    --dl-emergency: #d3142d;
+    --dl-emergency-soft: #fdecef;
+    --dl-emergency-foreground: #ffffff;
+    --dl-success: #0b7a4b;
+    --dl-success-soft: #e3f6ec;
+    --dl-warning: #a15c07;
+    --dl-warning-soft: #fef3d9;
+    --dl-error: #b42318;
+    --dl-error-soft: #fdeceb;
+    --dl-info: #0b6bcb;
+    --dl-info-soft: #e5f0fb;
+    --dl-disabled: #cbd5e1;
+    --dl-disabled-foreground: #64748b;
+    --dl-overlay: #0f172a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --dl-background: #0b1220;
+      --dl-surface: #111a2b;
+      --dl-elevated: #17233a;
+      --dl-subtle: #1b2940;
+      --dl-fg: #f1f5f9;
+      --dl-fg-secondary: #b6c2d4;
+      --dl-fg-muted: #8fa0b8;
+      --dl-border: #24344f;
+      --dl-border-strong: #34476a;
+      --dl-primary: #5b9bff;
+      --dl-primary-pressed: #7fb0ff;
+      --dl-primary-soft: #14284b;
+      --dl-primary-foreground: #08142b;
+      --dl-secondary: #1f2e47;
+      --dl-secondary-foreground: #e2e8f0;
+      --dl-emergency: #ff5468;
+      --dl-emergency-soft: #3a1119;
+      --dl-emergency-foreground: #2a0509;
+      --dl-success: #3dd598;
+      --dl-success-soft: #0f2d22;
+      --dl-warning: #f5b544;
+      --dl-warning-soft: #3a2a0b;
+      --dl-error: #ff7b72;
+      --dl-error-soft: #3b1512;
+      --dl-info: #6cb2ff;
+      --dl-info-soft: #12284a;
+      --dl-disabled: #33425c;
+      --dl-disabled-foreground: #8fa0b8;
+      --dl-overlay: #000000;
+    }
+  }
+
+  @theme inline {
+    --color-background: var(--dl-background);
+    --color-surface: var(--dl-surface);
+    --color-elevated: var(--dl-elevated);
+    --color-subtle: var(--dl-subtle);
+    --color-fg: var(--dl-fg);
+    --color-fg-secondary: var(--dl-fg-secondary);
+    --color-fg-muted: var(--dl-fg-muted);
+    --color-border: var(--dl-border);
+    --color-border-strong: var(--dl-border-strong);
+    --color-primary: var(--dl-primary);
+    --color-primary-pressed: var(--dl-primary-pressed);
+    --color-primary-soft: var(--dl-primary-soft);
+    --color-primary-foreground: var(--dl-primary-foreground);
+    --color-secondary: var(--dl-secondary);
+    --color-secondary-foreground: var(--dl-secondary-foreground);
+    --color-emergency: var(--dl-emergency);
+    --color-emergency-soft: var(--dl-emergency-soft);
+    --color-emergency-foreground: var(--dl-emergency-foreground);
+    --color-success: var(--dl-success);
+    --color-success-soft: var(--dl-success-soft);
+    --color-warning: var(--dl-warning);
+    --color-warning-soft: var(--dl-warning-soft);
+    --color-error: var(--dl-error);
+    --color-error-soft: var(--dl-error-soft);
+    --color-info: var(--dl-info);
+    --color-info-soft: var(--dl-info-soft);
+    --color-disabled: var(--dl-disabled);
+    --color-disabled-foreground: var(--dl-disabled-foreground);
+    --color-overlay: var(--dl-overlay);
+  }
+}
+
+@theme {
+  /* Typography: Inter, loaded in src/app/_layout.tsx */
+  --font-inter: Inter_400Regular;
+  --font-inter-medium: Inter_500Medium;
+  --font-inter-semibold: Inter_600SemiBold;
+  --font-inter-bold: Inter_700Bold;
+
+  /* Radius: deliberately restrained, not everything is a pill */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
 }
