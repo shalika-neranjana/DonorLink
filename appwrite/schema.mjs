@@ -390,19 +390,11 @@ export const TABLES = [
 
 export const BUCKETS = [
   {
-    id: 'avatars',
-    name: 'Profile photos',
-    fileSecurity: true,
-    maximumFileSize: 2 * 1024 * 1024,
-    allowedFileExtensions: ['jpg', 'jpeg', 'png', 'webp'],
-    permissions: ['create("users")'],
-  },
-  {
-    id: 'verification_docs',
-    name: 'Verification documents',
+    id: 'files',
+    name: 'DonorLink private files',
     fileSecurity: true,
     maximumFileSize: 5 * 1024 * 1024,
-    allowedFileExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+    allowedFileExtensions: ['jpg', 'jpeg', 'png', 'webp', 'pdf'],
     encryption: true,
     permissions: ['create("users")'],
   },

@@ -3,7 +3,7 @@ const domain = require('../lib/domain');
 const { validation, notFound, conflict } = require('../lib/errors');
 const { audit, notify, ownerReadPerms, requireAdmin, requireFields, iso } = require('../lib/context');
 
-const DOCS_BUCKET = 'verification_docs';
+const DOCS_BUCKET = 'files';
 
 async function assertOwnFiles(ctx, fileIds) {
   for (const fileId of fileIds) {

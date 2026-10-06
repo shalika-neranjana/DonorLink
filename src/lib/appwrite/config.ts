@@ -31,9 +31,14 @@ export const TABLES = {
 } as const;
 export type TableId = (typeof TABLES)[keyof typeof TABLES];
 
+/**
+ * One private bucket holds both profile photos and verification documents
+ * (the Appwrite plan limits the number of buckets). Every file is created with
+ * owner + admin read permissions only.
+ */
 export const BUCKETS = {
-  avatars: 'avatars',
-  verificationDocs: 'verification_docs',
+  avatars: 'files',
+  verificationDocs: 'files',
 } as const;
 
 export function isAppwriteConfigured(): boolean {

@@ -14,26 +14,13 @@ export interface PickedFile {
   size: number;
 }
 
-const MAX_BYTES: Record<BucketId, number> = {
-  [BUCKETS.avatars]: 2 * 1024 * 1024,
-  [BUCKETS.verificationDocs]: 5 * 1024 * 1024,
-};
+const MAX_BYTES = 5 * 1024 * 1024;
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
 
-const ALLOWED_TYPES: Record<BucketId, string[]> = {
-  [BUCKETS.avatars]: ['image/jpeg', 'image/png', 'image/webp'],
-  [BUCKETS.verificationDocs]: ['image/jpeg', 'image/png', 'application/pdf'],
-};
-
-export function validatePickedFile(bucketId: BucketId, file: PickedFile): string | null {
-  if (!ALLOWED_TYPES[bucketId].includes(file.mimeType)) {
-    return bucketId === BUCKETS.avatars
-      ? 'Choose a JPG, PNG or WebP image.'
-      : 'Choose a JPG, PNG or PDF file.';
-  }
+export function validatePickedFile(_bucketId: BucketId, file: PickedFile): string | null {
+  if (!ALLOWED_TYPES.includes(file.mimeType)) return 'Choose a JPG, PNG, WebP or PDF file.';
   if (file.size <= 0) return 'That file is empty.';
-  if (file.size > MAX_BYTES[bucketId]) {
-    return `That file is too large. The limit is ${MAX_BYTES[bucketId] / (1024 * 1024)} MB.`;
-  }
+  if (file.size > MAX_BYTES) return `That file is too large. The limit is ${MAX_BYTES / (1024 * 1024)} MB.`;
   return null;
 }
 

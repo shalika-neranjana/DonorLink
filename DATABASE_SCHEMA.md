@@ -301,8 +301,7 @@ Table permissions: `read("users")`
 
 | Bucket | Purpose | Max size | Extensions | Notes |
 | --- | --- | --- | --- | --- |
-| `avatars` | Profile photos | 2 MB | jpg, jpeg, png, webp | file security on; users may create, each file readable only by its owner and admins |
-| `verification_docs` | Verification documents | 5 MB | jpg, jpeg, png, pdf | file security on; users may create, each file readable only by its owner and admins; encrypted |
+| `files` | DonorLink private files | 5 MB | jpg, jpeg, png, webp, pdf | file security on; users may create, each file readable only by its owner and admins; encrypted |
 
 ## Function
 

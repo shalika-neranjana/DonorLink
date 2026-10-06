@@ -17,7 +17,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Client, Functions, ID, InputFile, Storage, TablesDB } from 'node-appwrite';
+import { Client, Functions, ID, Storage, TablesDB } from 'node-appwrite';
+import { InputFile } from 'node-appwrite/file';
 
 import {
   BUCKETS,

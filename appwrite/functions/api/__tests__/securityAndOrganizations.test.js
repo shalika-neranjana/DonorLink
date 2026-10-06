@@ -72,7 +72,7 @@ describe('authentication and authorization', () => {
 
 describe('verification workflow', () => {
   async function upload(w, userId, fileId) {
-    w.storage.addFile('verification_docs', fileId, [`read("user:${userId}")`, 'read("label:admin")']);
+    w.storage.addFile('files', fileId, [`read("user:${userId}")`, 'read("label:admin")']);
   }
 
   it('lets a user submit documents and an admin review them', async () => {
@@ -132,7 +132,7 @@ describe('verification workflow', () => {
 
 describe('organization workflows', () => {
   async function registerOrg(w) {
-    w.storage.addFile('verification_docs', 'doc', ['read("user:staff1")']);
+    w.storage.addFile('files', 'doc', ['read("user:staff1")']);
     const sub = await w.ok('staff1', 'verification.submit', {
       subjectType: 'organization',
       documentType: 'organization_registration',
