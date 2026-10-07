@@ -1,0 +1,26 @@
+{
+  "cli": { "version": ">= 16.0.0", "appVersionSource": "local" },
+  "build": {
+    "preview": {
+      "distribution": "internal",
+      "android": { "buildType": "apk" },
+      "env": {
+        "EXPO_PUBLIC_APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+        "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "6ac4b77b003a7479e081",
+        "EXPO_PUBLIC_APPWRITE_PLATFORM": "com.donorlink.app",
+        "EXPO_PUBLIC_APPWRITE_DATABASE_ID": "donorlink",
+        "EXPO_PUBLIC_APPWRITE_FUNCTION_ID": "donorlink-api"
+      }
+    },
+    "production": {
+      "android": { "buildType": "app-bundle" },
+      "env": {
+        "EXPO_PUBLIC_APPWRITE_ENDPOINT": "https://sgp.cloud.appwrite.io/v1",
+        "EXPO_PUBLIC_APPWRITE_PROJECT_ID": "6ac4b77b003a7479e081",
+        "EXPO_PUBLIC_APPWRITE_PLATFORM": "com.donorlink.app",
+        "EXPO_PUBLIC_APPWRITE_DATABASE_ID": "donorlink",
+        "EXPO_PUBLIC_APPWRITE_FUNCTION_ID": "donorlink-api"
+      }
+    }
+  }
+}
