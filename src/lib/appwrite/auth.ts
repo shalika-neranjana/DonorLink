@@ -1,8 +1,10 @@
 import { ID, type Models } from 'react-native-appwrite';
 
 import client, { account } from './client';
+import { appwriteConfig } from './config';
 import { AppError, toAppError } from './errors';
 import { secureStorage } from './secureStorage';
+import { clearFallbackSession, readFallbackSession } from './sessionFallback';
 
 const SESSION_KEY = 'donorlink.session';
 
@@ -63,9 +65,12 @@ export const authApi = {
         email: email.trim().toLowerCase(),
         password,
       });
-      if (session.secret) {
-        client.setSession(session.secret);
-        await secureStorage.set(SESSION_KEY, session.secret);
+      // Appwrite leaves `secret` empty for client apps; the SDK's fallback
+      // header then carries the session (see sessionFallback.ts).
+      const secret = session.secret || readFallbackSession(appwriteConfig.projectId);
+      if (secret) {
+        client.setSession(secret);
+        await secureStorage.set(SESSION_KEY, secret);
       }
       return await account.get();
     } catch (error) {
@@ -80,6 +85,7 @@ export const authApi = {
       // The local session is cleared regardless; the server session expires on its own.
     }
     client.setSession('');
+    clearFallbackSession();
     await secureStorage.remove(SESSION_KEY);
   },
 
