@@ -1,8 +1,7 @@
 import { createToastHook } from '@gluestack-ui/core/toast/creator';
 import * as Haptics from 'expo-haptics';
 import { useMemo } from 'react';
-import { AccessibilityInfo, Platform, Pressable, View } from 'react-native';
-import Animated, { FadeOutUp, SlideInUp } from 'react-native-reanimated';
+import { AccessibilityInfo, Platform, Pressable, useWindowDimensions, View } from 'react-native';
 
 import type { ColorToken } from '@/theme/tokens';
 import { DonorLinkIcon, type IconName } from './DonorLinkIcon';
@@ -19,10 +18,23 @@ const TONES: Record<ToastTone, { icon: IconName; color: ColorToken; bar: string 
   warning: { icon: 'warning', color: 'warning', bar: 'bg-warning' },
 };
 
-function ToastCard({ tone, title, message, onClose }: { tone: ToastTone; title: string; message?: string; onClose: () => void }) {
+const SIDE_MARGIN = 16;
+const MAX_WIDTH = 420;
+
+/**
+ * The toast list wraps every toast in views that shrink to their content
+ * (`alignItems: 'center'`). A percentage width has no definite parent to
+ * resolve against there, so on native it collapsed to zero and only the 4px
+ * colour bar was left: the "thin vertical line". An explicit width derived
+ * from the window is definite on every platform. Enter/exit animation comes
+ * from the toast list itself.
+ */
+export function ToastCard({ tone, title, message, onClose }: { tone: ToastTone; title: string; message?: string; onClose: () => void }) {
   const t = TONES[tone];
+  const { width: windowWidth } = useWindowDimensions();
+  const width = Math.max(240, Math.min(windowWidth - SIDE_MARGIN * 2, MAX_WIDTH));
   return (
-    <Animated.View entering={SlideInUp.duration(180)} exiting={FadeOutUp.duration(150)} className="w-[92%] max-w-[420px] self-center">
+    <View testID="toast-card" style={{ width }} className="mt-2 self-center">
       <View
         accessibilityRole="alert"
         accessibilityLiveRegion="polite"
@@ -44,7 +56,7 @@ function ToastCard({ tone, title, message, onClose }: { tone: ToastTone; title: 
           </Pressable>
         </View>
       </View>
-    </Animated.View>
+    </View>
   );
 }
 

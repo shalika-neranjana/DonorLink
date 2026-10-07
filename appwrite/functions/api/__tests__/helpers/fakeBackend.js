@@ -13,6 +13,11 @@ class AppwriteError extends Error {
   }
 }
 
+const UNIQUE_INDEXES = {
+  donations: [['responseId']],
+  request_responses: [['requestId', 'donorId']],
+};
+
 function matchesQuery(row, query) {
   const { method, attribute, values } = query;
   const v = row[attribute];
@@ -55,6 +60,12 @@ class FakeTablesDB {
   async createRow({ tableId, rowId, data, permissions }) {
     const table = this.table(tableId);
     if (table.has(rowId)) throw new AppwriteError(409, `Row ${rowId} already exists`);
+    // Unique indexes from appwrite/schema.mjs that handlers rely on.
+    const unique = UNIQUE_INDEXES[tableId] || [];
+    for (const columns of unique) {
+      const clash = [...table.values()].some((row) => columns.every((c) => row[c] === (data || {})[c]));
+      if (clash) throw new AppwriteError(409, `Unique index on ${columns.join(',')} violated`);
+    }
     const stamp = this.clock().toISOString();
     const clean = {};
     for (const [k, v] of Object.entries(data || {})) if (v !== undefined) clean[k] = v;
@@ -82,6 +93,26 @@ class FakeTablesDB {
     if (!row) throw new AppwriteError(404, 'Row not found');
     for (const [k, v] of Object.entries(data || {})) if (v !== undefined) row[k] = v;
     if (permissions) row.$permissions = permissions;
+    row.$updatedAt = this.clock().toISOString();
+    return structuredClone(row);
+  }
+
+  async incrementRowColumn({ tableId, rowId, column, value = 1, max }) {
+    const row = this.table(tableId).get(rowId);
+    if (!row) throw new AppwriteError(404, 'Row not found');
+    const next = (row[column] || 0) + value;
+    if (max !== undefined && next > max) throw new AppwriteError(400, `Column ${column} would exceed ${max}`);
+    row[column] = next;
+    row.$updatedAt = this.clock().toISOString();
+    return structuredClone(row);
+  }
+
+  async decrementRowColumn({ tableId, rowId, column, value = 1, min }) {
+    const row = this.table(tableId).get(rowId);
+    if (!row) throw new AppwriteError(404, 'Row not found');
+    const next = (row[column] || 0) - value;
+    if (min !== undefined && next < min) throw new AppwriteError(400, `Column ${column} would go below ${min}`);
+    row[column] = next;
     row.$updatedAt = this.clock().toISOString();
     return structuredClone(row);
   }

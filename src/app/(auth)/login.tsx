@@ -21,21 +21,26 @@ export default function LoginScreen() {
   const [formError, setFormError] = useState<string | null>(null);
   const passwordRef = useRef<TextInput>(null);
 
+  const inFlight = useRef(false);
+
   async function submit() {
-    if (submitting) return;
+    if (inFlight.current) return;
     setFormError(null);
     const result = validateLogin(values);
     if (!result.ok) {
       setErrors(result.errors);
       return;
     }
+    inFlight.current = true;
     setSubmitting(true);
     try {
       await signIn(result.value.email, result.value.password);
-      // The root layout swaps to onboarding or the app once the session is ready.
+      // The root layout swaps to onboarding or the app once the session is ready;
+      // an unverified account is sent to email verification by the auth layout.
     } catch (error) {
       setFormError(getErrorMessage(error));
     } finally {
+      inFlight.current = false;
       setSubmitting(false);
     }
   }

@@ -29,7 +29,7 @@ export interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (input: { name: string; email: string; password: string }) => Promise<void>;
   signOut: () => Promise<void>;
-  refreshUser: () => Promise<AuthUser | null>;
+  refreshUser: (known?: AuthUser) => Promise<AuthUser | null>;
   refreshProfile: () => Promise<Profile | null>;
   refreshDonorProfile: () => Promise<DonorProfile | null>;
   setProfile: (profile: Profile) => void;
@@ -134,7 +134,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [loadAccount],
   );
 
-  const refreshUser = useCallback(async () => {
+  const refreshUser = useCallback(async (known?: AuthUser) => {
+    // A caller that already holds the fresh user (e.g. right after verifying
+    // the email) hands it over, so no second request can fail silently.
+    if (known) {
+      setUser(known);
+      return known;
+    }
     try {
       const next = await authApi.restoreSession();
       if (next) setUser(next);

@@ -1,6 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { View } from 'react-native';
 
 import { DonorLinkAvatar } from '@/components/ui/DonorLinkAvatar';
@@ -16,7 +16,7 @@ import { useAvatarUri } from '@/hooks/useAvatarUri';
 import { useFormState } from '@/hooks/useFormState';
 import { getErrorMessage } from '@/lib/appwrite/errors';
 import { BUCKETS } from '@/lib/appwrite/config';
-import { deleteFile, uploadPrivateFile, validatePickedFile } from '@/lib/appwrite/files';
+import { deleteFile, toPickedFile, uploadPrivateFile, validatePickedFile } from '@/lib/appwrite/files';
 import { authApi } from '@/lib/appwrite/auth';
 import { useAuth } from '@/providers/AuthProvider';
 import { profileService } from '@/services/profileService';
@@ -30,6 +30,7 @@ export default function EditProfileScreen() {
   const avatar = useAvatarUri(profile?.avatarFileId);
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [photoProgress, setPhotoProgress] = useState<number | null>(null);
+  const photoBusy = useRef(false);
   const { values, errors, setValue, setErrors } = useFormState({
     displayName: profile?.displayName ?? user?.name ?? '',
     phone: profile?.phone ?? '',
@@ -41,33 +42,38 @@ export default function EditProfileScreen() {
   const [formError, setFormError] = useState<string | null>(null);
 
   async function pickPhoto() {
-    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permission.granted) {
-      toast.warning('Photo access is off', 'Allow photo access in your device settings to add a profile picture.');
-      return;
-    }
-    const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], allowsEditing: true, aspect: [1, 1], quality: 0.7 });
-    if (result.canceled || !result.assets[0]) return;
-    const asset = result.assets[0];
-    const file = { uri: asset.uri, name: asset.fileName ?? 'profile.jpg', mimeType: asset.mimeType ?? 'image/jpeg', size: asset.fileSize ?? 0 };
-    const problem = validatePickedFile(BUCKETS.avatars, file.size ? file : { ...file, size: 1 });
-    if (problem) {
-      toast.error("That photo can't be used", problem);
-      return;
-    }
-    setPhotoUri(asset.uri);
-    setPhotoProgress(0);
+    if (photoBusy.current || !user) return;
+    photoBusy.current = true;
+    let uploadedId: string | null = null;
     try {
+      // The system photo picker needs no permission (Expo docs: "No permissions
+      // request is necessary for launching the image library"), so access is
+      // never blocked by a permission prompt that has nothing to grant.
+      const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], allowsEditing: true, aspect: [1, 1], quality: 0.7 });
+      if (result.canceled || !result.assets[0]) return;
+      const asset = result.assets[0];
+      const file = await toPickedFile({ uri: asset.uri, name: asset.fileName, mimeType: asset.mimeType, size: asset.fileSize });
+      const problem = validatePickedFile(BUCKETS.avatars, file);
+      if (problem) {
+        toast.error("That photo can't be used", problem);
+        return;
+      }
+      setPhotoUri(asset.uri);
+      setPhotoProgress(0);
       const oldId = profile?.avatarFileId;
-      const fileId = await uploadPrivateFile(BUCKETS.avatars, user!.$id, { ...file, size: file.size || 1 }, setPhotoProgress);
-      const { profile: saved } = await profileService.saveProfile({ displayName: profile?.displayName ?? values.displayName }, { avatarFileId: fileId });
+      uploadedId = await uploadPrivateFile(BUCKETS.avatars, user.$id, file, setPhotoProgress);
+      const { profile: saved } = await profileService.saveProfile({ displayName: profile?.displayName ?? values.displayName }, { avatarFileId: uploadedId });
+      uploadedId = null; // now referenced by the profile
       setProfile(saved);
       if (oldId) void deleteFile(BUCKETS.avatars, oldId).catch(() => undefined);
       toast.success('Profile photo updated');
     } catch (e) {
       setPhotoUri(null);
+      // Don't leave an unreferenced file behind when saving the reference failed.
+      if (uploadedId) void deleteFile(BUCKETS.avatars, uploadedId).catch(() => undefined);
       toast.error("We couldn't upload your photo", getErrorMessage(e));
     } finally {
+      photoBusy.current = false;
       setPhotoProgress(null);
     }
   }

@@ -132,7 +132,11 @@ export function DonorLinkSegmentedControl<T extends string>({
   });
   if (scrollable) {
     return (
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} accessibilityRole="tablist">
+      // React Native gives every ScrollView `flexGrow: 1`. Inside a screen's
+      // vertical content container (which also grows), a horizontal ScrollView
+      // therefore claimed all the leftover height and pushed the empty state
+      // away. `flexGrow: 0` keeps it as tall as its row of tabs.
+      <ScrollView horizontal style={{ flexGrow: 0 }} showsHorizontalScrollIndicator={false} accessibilityRole="tablist">
         <View className="flex-row gap-1 rounded-lg bg-subtle p-1">{items}</View>
       </ScrollView>
     );
