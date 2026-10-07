@@ -1,6 +1,7 @@
 const domain = require('../lib/domain');
 const { validation, notFound } = require('../lib/errors');
 const { audit, ownerReadPerms, shortName, iso } = require('../lib/context');
+const { assertOwnFiles } = require('./verification');
 
 const NOTIFICATION_PREF_KEYS = [
   'emergencyRequests',
@@ -88,7 +89,12 @@ async function saveProfile(ctx, payload) {
   const privacyPrefs = sanitizePrefs(payload.privacyPrefs, PRIVACY_PREF_KEYS);
   if (privacyPrefs !== undefined) data.privacyPrefs = privacyPrefs;
   if (payload.onboardingComplete === true) data.onboardingComplete = true;
-  if (typeof payload.avatarFileId === 'string' && payload.avatarFileId) data.avatarFileId = payload.avatarFileId;
+  if (typeof payload.avatarFileId === 'string' && payload.avatarFileId) {
+    if (!existing || existing.avatarFileId !== payload.avatarFileId) {
+      await assertOwnFiles(ctx, [payload.avatarFileId], 'avatarFileId');
+    }
+    data.avatarFileId = payload.avatarFileId;
+  }
 
   let profile;
   if (existing) {

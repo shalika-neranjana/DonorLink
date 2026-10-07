@@ -1,7 +1,7 @@
 import { ID, type Models } from 'react-native-appwrite';
 
 import client, { account } from './client';
-import { toAppError } from './errors';
+import { AppError, toAppError } from './errors';
 import { secureStorage } from './secureStorage';
 
 const SESSION_KEY = 'donorlink.session';
@@ -38,9 +38,22 @@ export const authApi = {
         password: input.password,
         name: input.name.trim(),
       });
-      return await authApi.login(input.email, input.password);
     } catch (error) {
       throw toAppError(error, "We couldn't create your account. Please try again.");
+    }
+    // The account now exists. If signing in fails (e.g. the connection drops),
+    // say so, because retrying "Create account" would only report a duplicate email.
+    try {
+      return await authApi.login(input.email, input.password);
+    } catch (error) {
+      const appError = toAppError(error);
+      throw new AppError(
+        appError.code,
+        appError.retryable
+          ? 'Your account was created, but we lost the connection before signing you in. Check your connection and sign in.'
+          : 'Your account was created, but we could not sign you in. Please sign in with your new password.',
+        { retryable: appError.retryable },
+      );
     }
   },
 
@@ -79,9 +92,14 @@ export const authApi = {
     }
   },
 
+  /**
+   * Confirms the 6-digit code from `sendVerificationCode`. The OTP flow has its
+   * own endpoint (`/account/verifications/email/otp`); `updateEmailVerification`
+   * is the link-token endpoint and never accepts these codes.
+   */
   async confirmVerificationCode(userId: string, code: string): Promise<AuthUser> {
     try {
-      await account.updateEmailVerification({ userId, secret: code.trim() });
+      await account.updateEmailVerificationOTP({ userId, secret: code.trim() });
       return await account.get();
     } catch (error) {
       throw toAppError(error, "We couldn't verify that code. Please try again.");

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 
 import { DonorLinkButton } from '@/components/ui/DonorLinkButton';
@@ -33,38 +33,47 @@ export function VerifyEmailPanel({ onVerified, onSkip }: { onVerified?: () => vo
     return () => clearTimeout(timer);
   }, [cooldown]);
 
+  // A ref, not state: two taps in the same frame would both see `busy === null`.
+  const inFlight = useRef(false);
+
   async function send() {
-    if (busy) return;
+    if (inFlight.current) return;
+    inFlight.current = true;
     setError(null);
     setBusy('send');
     try {
       await authApi.sendVerificationCode();
       setSent(true);
+      setCode('');
+      setFieldError(undefined);
       setCooldown(RESEND_SECONDS);
       toast.info('Code sent', `Check ${user?.email ?? 'your email'} for a 6-digit code.`);
     } catch (e) {
       setError(getErrorMessage(e));
     } finally {
+      inFlight.current = false;
       setBusy(null);
     }
   }
 
   async function verify() {
-    if (busy || !user) return;
+    if (inFlight.current || !user) return;
     setError(null);
     if (!/^\d{6}$/.test(code.trim())) {
       setFieldError('Enter the 6-digit code from your email.');
       return;
     }
+    inFlight.current = true;
     setBusy('verify');
     try {
-      await authApi.confirmVerificationCode(user.$id, code);
-      await refreshUser();
+      const verified = await authApi.confirmVerificationCode(user.$id, code);
+      await refreshUser(verified);
       toast.success('Email verified');
       onVerified?.();
     } catch (e) {
       setError(getErrorMessage(e));
     } finally {
+      inFlight.current = false;
       setBusy(null);
     }
   }

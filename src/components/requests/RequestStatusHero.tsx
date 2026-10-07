@@ -32,7 +32,7 @@ export function describeStatus(request: Pick<BloodRequest, 'status' | 'units' | 
     case 'submitted':
       return 'We received your request.';
     case 'pending_verification':
-      return 'A reviewer is checking your request. Donors are contacted as soon as it is verified.';
+      return 'A DonorLink reviewer or the hospital is checking your request. Donors are contacted as soon as it is verified.';
     case 'verified':
       return 'Verified. Starting donor matching.';
     case 'matching':

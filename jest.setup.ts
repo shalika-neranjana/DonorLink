@@ -12,6 +12,7 @@ jest.mock('expo-haptics', () => ({
 }));
 jest.mock('expo-network', () => ({ useNetworkState: () => ({ isConnected: true, isInternetReachable: true }) }));
 jest.mock('expo-image', () => ({ Image: 'Image' }));
+jest.mock('@react-native-async-storage/async-storage', () => require('@react-native-async-storage/async-storage/jest/async-storage-mock'));
 jest.mock('expo-secure-store', () => ({ getItemAsync: jest.fn(), setItemAsync: jest.fn(), deleteItemAsync: jest.fn() }));
 jest.mock('expo-location', () => ({}));
 jest.mock('expo-constants', () => ({ expoConfig: { version: '1.0.0' } }));

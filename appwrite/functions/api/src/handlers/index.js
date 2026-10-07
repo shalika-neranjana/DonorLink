@@ -50,6 +50,7 @@ const actions = {
   'support.create': platform.createTicket,
   'support.reply': platform.replyTicket,
 
+  'notifications.markRead': platform.markRead,
   'notifications.markAllRead': platform.markAllRead,
   'maintenance.run': (ctx) => {
     if (!ctx.isAdmin && ctx.trigger !== 'schedule') {

@@ -6,9 +6,8 @@
  *  - Clients can READ rows they are allowed to see (row-level permissions).
  *    Almost every WRITE goes through the `donorlink-api` Appwrite Function,
  *    which authenticates the caller, validates input and applies the
- *    documented state-transition rules. Only `notifications` rows are
- *    updatable by their owner (mark as read) and `support`-style data is
- *    created through the function as well.
+ *    documented state-transition rules. No table is directly writable by
+ *    clients (notifications are marked read through the function too).
  *  - Column enums mirror src/domain/statuses.ts.
  */
 
@@ -289,7 +288,7 @@ export const TABLES = [
   {
     id: 'notifications',
     name: 'Notifications',
-    description: 'In-app notifications. Owner can read, mark read and delete; created by the function.',
+    description: 'In-app notifications. Owner can read only; created and marked read by the function.',
     permissions: [],
     columns: [
       req(s('userId', 36)),
@@ -396,7 +395,9 @@ export const BUCKETS = [
     maximumFileSize: 5 * 1024 * 1024,
     allowedFileExtensions: ['jpg', 'jpeg', 'png', 'webp', 'pdf'],
     encryption: true,
-    permissions: ['create("users")'],
+    // Clients can only grant permissions for roles they hold, so uploads give
+    // the owner read/delete and reviewers get read from the bucket itself.
+    permissions: ['create("users")', 'read("label:admin")'],
   },
 ];
 

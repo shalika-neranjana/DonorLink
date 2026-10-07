@@ -137,7 +137,8 @@ async function notify(ctx, userId, type, context) {
         requestId: context && context.requestId,
         read: false,
       },
-      [Permission.read(Role.user(userId)), Permission.update(Role.user(userId)), Permission.delete(Role.user(userId))],
+      // Read-only for the owner: marking read goes through `notifications.markRead`.
+      [Permission.read(Role.user(userId))],
     );
   } catch (error) {
     ctx.log(`notify failed (${type}): ${error && error.message}`);

@@ -5,12 +5,13 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, type ReactNode } from 'react';
-import { Platform, useColorScheme, View } from 'react-native';
+import { Platform, View } from 'react-native';
 
 import { DonorLinkErrorState } from '@/components/ui/DonorLinkStates';
 import { DonorLinkSkeleton } from '@/components/ui/DonorLinkSkeleton';
 import { AppProviders } from '@/providers/AppProviders';
 import { useAuth } from '@/providers/AuthProvider';
+import { useResolvedColorScheme, useThemePreference } from '@/theme/ThemePreferenceProvider';
 import { useThemeColors } from '@/theme/useThemeColors';
 
 void SplashScreen.preventAutoHideAsync();
@@ -20,12 +21,17 @@ export default function RootLayout() {
 
   return (
     <AppProviders>
-      <StatusBar style="auto" />
+      <ThemedStatusBar />
       <PhoneFrame>
         <RootNavigator fontsReady={fontsLoaded || !!fontError} />
       </PhoneFrame>
     </AppProviders>
   );
+}
+
+/** Status-bar icons follow the scheme the app is showing, which may differ from the device's. */
+function ThemedStatusBar() {
+  return <StatusBar style={useResolvedColorScheme() === 'dark' ? 'light' : 'dark'} />;
 }
 
 /** On the web (development preview only) keep the app at phone width, centred. */
@@ -41,13 +47,15 @@ function PhoneFrame({ children }: { children: ReactNode }) {
 function RootNavigator({ fontsReady }: { fontsReady: boolean }) {
   const auth = useAuth();
   const colors = useThemeColors();
-  const scheme = useColorScheme();
+  const { ready: themeReady } = useThemePreference();
+  const scheme = useResolvedColorScheme();
   const base = scheme === 'dark' ? DarkTheme : DefaultTheme;
   const navTheme = {
     ...base,
     colors: { ...base.colors, background: colors.background, card: colors.surface, text: colors.fg, border: colors.border, primary: colors.primary },
   };
-  const ready = fontsReady && auth.status !== 'loading';
+  // Hold the splash until the saved theme is applied, so there is no light→dark flash.
+  const ready = fontsReady && themeReady && auth.status !== 'loading';
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();

@@ -28,7 +28,7 @@ import {
 import { useResource } from '@/hooks/useResource';
 import { BUCKETS } from '@/lib/appwrite/config';
 import { getErrorMessage } from '@/lib/appwrite/errors';
-import { validatePickedFile, type PickedFile } from '@/lib/appwrite/files';
+import { toPickedFile, validatePickedFile, type PickedFile } from '@/lib/appwrite/files';
 import { useAuth } from '@/providers/AuthProvider';
 import { requestService } from '@/services/requestService';
 import { verificationService } from '@/services/verificationService';
@@ -89,7 +89,7 @@ export default function VerificationDetailsScreen() {
     const result = await DocumentPicker.getDocumentAsync({ type: ['image/jpeg', 'image/png', 'application/pdf'], copyToCacheDirectory: true });
     if (result.canceled || !result.assets[0]) return;
     const a = result.assets[0];
-    addFile({ uri: a.uri, name: a.name, mimeType: a.mimeType ?? 'application/octet-stream', size: a.size ?? 0 });
+    addFile(await toPickedFile({ uri: a.uri, name: a.name, mimeType: a.mimeType, size: a.size }));
   }
 
   async function takePhoto() {
@@ -101,7 +101,7 @@ export default function VerificationDetailsScreen() {
     const result = await ImagePicker.launchCameraAsync({ mediaTypes: ['images'], quality: 0.7 });
     if (result.canceled || !result.assets[0]) return;
     const a = result.assets[0];
-    addFile({ uri: a.uri, name: a.fileName ?? `photo-${Date.now()}.jpg`, mimeType: a.mimeType ?? 'image/jpeg', size: a.fileSize ?? 1 });
+    addFile(await toPickedFile({ uri: a.uri, name: a.fileName ?? `photo-${Date.now()}.jpg`, mimeType: a.mimeType ?? 'image/jpeg', size: a.fileSize }));
   }
 
   async function submit() {

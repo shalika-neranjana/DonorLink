@@ -44,31 +44,53 @@ async function acceptResponse(ctx, payload) {
   const donor = await ctx.store.get('donor_profiles', ctx.userId);
   if (!donor) throw conflict('no_donor_profile', 'Set up your donor profile before accepting a request.');
 
-  const updatedResponse = await ctx.store.update('request_responses', response.$id, {
-    status: 'accepted',
-    respondedAt: iso(ctx.now()),
-  });
+  // Reserve a unit atomically: the database refuses the increment once `units`
+  // is reached, so two donors accepting at the same moment cannot over-fill.
+  try {
+    await ctx.store.increment('blood_requests', request.$id, 'unitsAccepted', 1, request.units);
+  } catch (error) {
+    if (error && error.code === 400) {
+      await ctx.store.update('request_responses', response.$id, { status: 'expired' });
+      throw conflict('enough_donors', 'Enough donors have already accepted. Thank you for being ready to help.');
+    }
+    throw error;
+  }
 
-  const donation = await ctx.store.create(
-    'donations',
-    ID.unique(),
-    {
-      requestId: request.$id,
-      responseId: response.$id,
-      donorId: ctx.userId,
-      donorName: response.donorName,
-      requesterId: request.requesterId,
-      hospitalId: request.hospitalId || null,
-      hospitalName: request.hospitalName,
-      bloodGroup: request.bloodGroup,
-      units: 1,
-      status: 'scheduled',
-    },
-    requestRowPerms({ donorId: ctx.userId, requesterId: request.requesterId, hospitalId: request.hospitalId }),
-  );
+  let updatedResponse;
+  let donation;
+  try {
+    updatedResponse = await ctx.store.update('request_responses', response.$id, {
+      status: 'accepted',
+      respondedAt: iso(ctx.now()),
+    });
+    donation = await ctx.store.create(
+      'donations',
+      ID.unique(),
+      {
+        requestId: request.$id,
+        responseId: response.$id,
+        donorId: ctx.userId,
+        donorName: response.donorName,
+        requesterId: request.requesterId,
+        hospitalId: request.hospitalId || null,
+        hospitalName: request.hospitalName,
+        bloodGroup: request.bloodGroup,
+        units: 1,
+        status: 'scheduled',
+      },
+      requestRowPerms({ donorId: ctx.userId, requesterId: request.requesterId, hospitalId: request.hospitalId }),
+    );
+  } catch (error) {
+    // Give the reserved unit back; a duplicate donation row (409) means a
+    // double tap already accepted this response.
+    await ctx.store.decrement('blood_requests', request.$id, 'unitsAccepted').catch(() => undefined);
+    if (error && error.code === 409) throw conflict('already_accepted', 'You already accepted this request.');
+    throw error;
+  }
 
-  const accepted = (request.unitsAccepted || 0) + 1;
-  request = await ctx.store.update('blood_requests', request.$id, { unitsAccepted: accepted });
+  // Re-read so the next status reflects every concurrent accept.
+  request = await ctx.store.get('blood_requests', request.$id);
+  const accepted = request.unitsAccepted || 0;
   if (request.status === 'matching') request = await transitionRequest(ctx, request, 'donors_contacted', 'Donors contacted');
   const target = accepted >= request.units ? 'fulfilled' : 'partially_fulfilled';
   if (request.status !== target && domain.canTransitionRequest(request.status, target)) {

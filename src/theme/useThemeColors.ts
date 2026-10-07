@@ -1,13 +1,11 @@
-import { useColorScheme } from 'react-native';
-
 import { palettes, type ColorPalette } from './tokens';
+import { useResolvedColorScheme } from './ThemePreferenceProvider';
 
-/** Raw hex palette for the current system colour scheme. */
+/** Raw hex palette for the scheme the app is currently showing (user preference, else the system's). */
 export function useThemeColors(): ColorPalette {
-  const scheme = useColorScheme();
-  return scheme === 'dark' ? palettes.dark : palettes.light;
+  return useResolvedColorScheme() === 'dark' ? palettes.dark : palettes.light;
 }
 
 export function useIsDark(): boolean {
-  return useColorScheme() === 'dark';
+  return useResolvedColorScheme() === 'dark';
 }

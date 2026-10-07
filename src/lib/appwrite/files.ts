@@ -1,6 +1,5 @@
 import { ID, Permission, Role } from 'react-native-appwrite';
 
-import { LABEL_ADMIN } from '@/domain';
 import { storage } from './client';
 import { BUCKETS } from './config';
 import { AppError, toAppError } from './errors';
@@ -24,9 +23,51 @@ export function validatePickedFile(_bucketId: BucketId, file: PickedFile): strin
   return null;
 }
 
+const EXTENSION_BY_MIME: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'application/pdf': 'pdf',
+};
+const MIME_BY_EXTENSION: Record<string, string> = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', pdf: 'application/pdf' };
+
+function extensionOf(value?: string | null): string | null {
+  const match = /\.([a-z0-9]+)(?:[?#].*)?$/i.exec(value ?? '');
+  return match ? match[1].toLowerCase() : null;
+}
+
 /**
- * Uploads a file readable only by its owner and administrators. File IDs are
- * what gets stored on rows; private URLs are never exposed.
+ * Turns what a picker returned into a file Appwrite will accept. Pickers may
+ * leave the name, MIME type and size empty (expo-image-picker documents all
+ * three as optional), and the bucket checks the extension, so a missing or
+ * mismatched value would otherwise fail the upload.
+ */
+export async function toPickedFile(asset: { uri: string; name?: string | null; mimeType?: string | null; size?: number | null }): Promise<PickedFile> {
+  const declared = asset.mimeType && asset.mimeType !== 'application/octet-stream' ? asset.mimeType.toLowerCase() : null;
+  const mimeType = declared ?? MIME_BY_EXTENSION[extensionOf(asset.name) ?? extensionOf(asset.uri) ?? ''] ?? 'application/octet-stream';
+  const extension = EXTENSION_BY_MIME[mimeType];
+  const base = (asset.name ?? '').replace(/\.[a-z0-9]+$/i, '').trim() || `upload-${Date.now()}`;
+  const name = extension ? `${base}.${extension}` : (asset.name ?? base);
+
+  let size = asset.size ?? 0;
+  if (!size) {
+    try {
+      size = (await (await fetch(asset.uri)).blob()).size;
+    } catch {
+      size = 0;
+    }
+  }
+  return { uri: asset.uri, name, mimeType, size };
+}
+
+/**
+ * Uploads a file readable only by its owner. File IDs are what gets stored on
+ * rows; private URLs are never exposed.
+ *
+ * Appwrite only lets a client grant permissions for roles it holds, so asking
+ * for `read(label:admin)` here made every upload by a non-admin fail with
+ * "user_unauthorized". Reviewer (admin) access comes from the bucket's own
+ * `read("label:admin")` permission instead (see appwrite/schema.mjs).
  */
 export async function uploadPrivateFile(
   bucketId: BucketId,
@@ -41,11 +82,7 @@ export async function uploadPrivateFile(
       bucketId,
       fileId: ID.unique(),
       file: { name: file.name, type: file.mimeType, size: file.size, uri: file.uri },
-      permissions: [
-        Permission.read(Role.user(userId)),
-        Permission.delete(Role.user(userId)),
-        Permission.read(Role.label(LABEL_ADMIN)),
-      ],
+      permissions: [Permission.read(Role.user(userId)), Permission.delete(Role.user(userId))],
       onProgress: (progress) => onProgress?.(Math.round(progress.progress)),
     });
     return created.$id;

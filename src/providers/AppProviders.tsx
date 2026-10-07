@@ -5,24 +5,27 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { RequestDraftProvider } from '@/features/requester/RequestDraftContext';
+import { ThemePreferenceProvider } from '@/theme/ThemePreferenceProvider';
 import { AuthProvider } from './AuthProvider';
 
 /**
- * Provider stack: gestures → safe areas → gluestack overlay/toast → auth.
- * Colour theming is handled by CSS variables in global.css (light/dark follow
- * the system setting), so there is no separate theme provider.
+ * Provider stack: gestures → safe areas → theme preference → gluestack
+ * overlay/toast → auth. Colours themselves are CSS variables in global.css;
+ * the theme preference (System / Light / Dark) only decides which set applies.
  */
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <OverlayProvider>
-          <ToastProvider>
-            <AuthProvider>
-              <RequestDraftProvider>{children}</RequestDraftProvider>
-            </AuthProvider>
-          </ToastProvider>
-        </OverlayProvider>
+        <ThemePreferenceProvider>
+          <OverlayProvider>
+            <ToastProvider>
+              <AuthProvider>
+                <RequestDraftProvider>{children}</RequestDraftProvider>
+              </AuthProvider>
+            </ToastProvider>
+          </OverlayProvider>
+        </ThemePreferenceProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

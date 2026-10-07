@@ -89,12 +89,8 @@ async function contactDonor(ctx, request, match) {
 
   // Contacted donors may read the request they were asked to help with.
   const permissions = Array.from(new Set([...(request.$permissions || []), Permission.read(Role.user(match.donorId))]));
-  const updated = await ctx.store.update(
-    'blood_requests',
-    request.$id,
-    { contactedCount: (request.contactedCount || 0) + 1 },
-    permissions,
-  );
+  await ctx.store.update('blood_requests', request.$id, {}, permissions);
+  const updated = await ctx.store.increment('blood_requests', request.$id, 'contactedCount');
 
   await notify(ctx, match.donorId, 'emergency_request', notificationContext(request, { distanceKm: match.distanceKm }));
   return { response, request: updated };
@@ -444,8 +440,8 @@ async function expireRequest(ctx, request) {
 async function releaseAcceptedUnit(ctx, requestId) {
   const request = await ctx.store.get('blood_requests', requestId);
   if (!request) return null;
-  const accepted = Math.max(0, (request.unitsAccepted || 0) - 1);
-  let current = await ctx.store.update('blood_requests', request.$id, { unitsAccepted: accepted });
+  let current = (request.unitsAccepted || 0) > 0 ? await ctx.store.decrement('blood_requests', request.$id, 'unitsAccepted') : request;
+  const accepted = current.unitsAccepted || 0;
   if (current.status === 'fulfilled' && accepted < current.units) {
     current = await transitionRequest(ctx, current, 'partially_fulfilled', 'A donor is no longer available');
   }

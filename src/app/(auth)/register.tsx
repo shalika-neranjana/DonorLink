@@ -21,20 +21,26 @@ export default function RegisterScreen() {
   const passwordRef = useRef<TextInput>(null);
   const confirmRef = useRef<TextInput>(null);
 
+  // A ref, not state: two taps in the same frame both see `submitting === false`.
+  const inFlight = useRef(false);
+
   async function submit() {
-    if (submitting) return;
+    if (inFlight.current) return;
     setFormError(null);
     const result = validateRegistration(values);
     if (!result.ok) {
       setErrors(result.errors);
       return;
     }
+    inFlight.current = true;
     setSubmitting(true);
     try {
+      // On success the auth layout moves on to email verification.
       await signUp({ name: result.value.name, email: result.value.email, password: result.value.password });
     } catch (error) {
       setFormError(getErrorMessage(error));
     } finally {
+      inFlight.current = false;
       setSubmitting(false);
     }
   }

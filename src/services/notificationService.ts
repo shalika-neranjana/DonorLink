@@ -1,7 +1,7 @@
 import type { NotificationCategory } from '@/domain';
 import { callApi } from '@/lib/appwrite/api';
 import { TABLES } from '@/lib/appwrite/config';
-import { deleteOwnRow, listRows, Query, updateOwnRow } from '@/lib/appwrite/database';
+import { listRows, Query } from '@/lib/appwrite/database';
 import type { AppNotification } from '@/types/entities';
 
 export const notificationService = {
@@ -20,18 +20,12 @@ export const notificationService = {
     return result.total;
   },
 
-  markAsRead(notificationId: string): Promise<AppNotification> {
-    return updateOwnRow<AppNotification>(TABLES.notifications, notificationId, {
-      read: true,
-      readAt: new Date().toISOString(),
-    });
+  async markAsRead(notificationId: string): Promise<AppNotification> {
+    const { notification } = await callApi<{ notification: AppNotification }>('notifications.markRead', { notificationId });
+    return notification;
   },
 
   markAllAsRead() {
     return callApi<{ updated: number }>('notifications.markAllRead');
-  },
-
-  remove(notificationId: string): Promise<void> {
-    return deleteOwnRow(TABLES.notifications, notificationId);
   },
 };

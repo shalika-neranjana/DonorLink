@@ -23,9 +23,12 @@ module.exports = async ({ req, res, log, error }) => {
     .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
     .setKey(key);
 
+  // Scheduled executions arrive with an empty body; `req.bodyJson` throws on
+  // that, so parse the raw text only when there is some.
   let body = {};
   try {
-    body = req.bodyJson || (req.bodyText ? JSON.parse(req.bodyText) : {});
+    const text = typeof req.bodyText === 'string' ? req.bodyText.trim() : '';
+    body = text ? JSON.parse(text) : {};
   } catch {
     return res.json({ ok: false, error: { code: 'bad_request', message: 'Request body must be JSON.' } }, 400);
   }

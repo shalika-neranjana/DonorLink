@@ -39,20 +39,3 @@ export async function listRows<T>(tableId: TableId, queries: string[] = []): Pro
     throw toAppError(error);
   }
 }
-
-/** Direct update. Only used where the table grants it (own notifications). */
-export async function updateOwnRow<T>(tableId: TableId, rowId: string, data: Record<string, unknown>): Promise<T> {
-  try {
-    return (await tablesDB.updateRow({ databaseId: appwriteConfig.databaseId, tableId, rowId, data })) as unknown as T;
-  } catch (error) {
-    throw toAppError(error);
-  }
-}
-
-export async function deleteOwnRow(tableId: TableId, rowId: string): Promise<void> {
-  try {
-    await tablesDB.deleteRow({ databaseId: appwriteConfig.databaseId, tableId, rowId });
-  } catch (error) {
-    throw toAppError(error);
-  }
-}

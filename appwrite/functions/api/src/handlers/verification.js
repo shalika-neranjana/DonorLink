@@ -5,16 +5,17 @@ const { audit, notify, ownerReadPerms, requireAdmin, requireFields, iso } = requ
 
 const DOCS_BUCKET = 'files';
 
-async function assertOwnFiles(ctx, fileIds) {
+/** Files must exist and have been uploaded (read-permitted) by the caller. */
+async function assertOwnFiles(ctx, fileIds, field = 'documentFileIds') {
   for (const fileId of fileIds) {
     let file;
     try {
       file = await ctx.storage.getFile({ bucketId: DOCS_BUCKET, fileId });
     } catch {
-      throw validation({ documentFileIds: 'One of the uploaded documents could not be found. Please upload it again.' });
+      throw validation({ [field]: 'One of the uploaded files could not be found. Please upload it again.' });
     }
     const owned = (file.$permissions || []).includes(Permission.read(Role.user(ctx.userId)));
-    if (!owned) throw validation({ documentFileIds: 'You can only submit documents you uploaded.' });
+    if (!owned) throw validation({ [field]: 'You can only use files you uploaded.' });
   }
 }
 
@@ -185,4 +186,4 @@ async function reviewVerification(ctx, payload) {
   return { verification: updated, organization };
 }
 
-module.exports = { submitVerification, reviewVerification };
+module.exports = { submitVerification, reviewVerification, assertOwnFiles };

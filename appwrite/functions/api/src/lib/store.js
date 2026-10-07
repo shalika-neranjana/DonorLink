@@ -72,6 +72,22 @@ class Store {
     return this.tablesDB.updateRow(params);
   }
 
+  /**
+   * Atomic server-side `column += by`. With `max` the database rejects (400)
+   * an increment that would exceed it, so concurrent callers cannot both win
+   * the last slot the way a read-modify-write would allow.
+   */
+  increment(tableId, rowId, column, by = 1, max) {
+    const params = { databaseId: this.databaseId, tableId, rowId, column, value: by };
+    if (max !== undefined) params.max = max;
+    return this.tablesDB.incrementRowColumn(params);
+  }
+
+  /** Atomic `column -= by`, never below `min` (default 0). */
+  decrement(tableId, rowId, column, by = 1, min = 0) {
+    return this.tablesDB.decrementRowColumn({ databaseId: this.databaseId, tableId, rowId, column, value: by, min });
+  }
+
   async remove(tableId, rowId) {
     await this.tablesDB.deleteRow({ databaseId: this.databaseId, tableId, rowId });
   }

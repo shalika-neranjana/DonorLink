@@ -37,6 +37,16 @@ async function replyTicket(ctx, payload) {
 
 // --- notifications ------------------------------------------------------------
 
+/** Owners can only flip `read` on their own rows; nothing else is client-writable. */
+async function markRead(ctx, payload) {
+  requireFields(payload, ['notificationId']);
+  const row = await ctx.store.get('notifications', payload.notificationId);
+  if (!row || row.userId !== ctx.userId) throw notFound('Notification not found.');
+  if (row.read) return { notification: row };
+  const notification = await ctx.store.update('notifications', row.$id, { read: true, readAt: iso(ctx.now()) });
+  return { notification };
+}
+
 async function markAllRead(ctx) {
   const unread = await ctx.store.listAll(
     'notifications',
@@ -68,4 +78,4 @@ async function runMaintenance(ctx) {
   return { expired, checked: stale.length };
 }
 
-module.exports = { createTicket, replyTicket, markAllRead, runMaintenance };
+module.exports = { createTicket, replyTicket, markRead, markAllRead, runMaintenance };

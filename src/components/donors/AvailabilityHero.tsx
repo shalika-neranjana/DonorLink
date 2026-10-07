@@ -57,7 +57,7 @@ export function AvailabilityHero({ donor, onOpenSettings }: AvailabilityHeroProp
   const detail = !donor
     ? 'Add your blood group to start receiving requests.'
     : available
-      ? `${donor.availableUntil ? `Until ${formatTimeUntil(donor.availableUntil).replace('in ', 'in ')} · ` : ''}Within ${donor.radiusKm} km · Emergency alerts ${donor.emergencyAlerts ? 'on' : 'off'}`
+      ? `${donor.availableUntil ? `Switches off ${formatTimeUntil(donor.availableUntil)} · ` : ''}Within ${donor.radiusKm} km · Emergency alerts ${donor.emergencyAlerts ? 'on' : 'off'}`
       : stale
         ? 'Your last update was a while ago. Confirm to keep receiving requests.'
         : 'Switch on to be notified about compatible requests nearby.';
