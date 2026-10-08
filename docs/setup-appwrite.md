@@ -39,7 +39,7 @@ npm run appwrite:provision
 
 It is idempotent (safe to re-run) and never deletes anything. It creates:
 
-- database `donorlink` with 13 tables, columns, enums and indexes (see [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md));
+- database `donorlink` with 13 tables, columns, enums and indexes (see [database-schema.md](database-schema.md));
 - one private bucket `files` for profile photos and verification documents (file security on, 5 MB, jpg/png/webp/pdf, encrypted; the free Appwrite plan allows only one bucket);
 - seed rows: `system_settings/global` and a directory of real Sri Lankan public hospitals as **unclaimed, unverified** listings;
 - function `donorlink-api` (Node 22, scheduled every 15 minutes for maintenance, execute permission `users`) with its scopes, then packages and deploys it.

@@ -5,7 +5,7 @@
  *   missing, and never deletes anything.
  *
  * Requirements
- *   - A server API key created in the Appwrite Console (see APPWRITE_SETUP.md)
+ *   - A server API key created in the Appwrite Console (see docs/setup-appwrite.md)
  *     stored in `.env.provision.local` (git-ignored) as APPWRITE_API_KEY=...
  *   - `.env` containing EXPO_PUBLIC_APPWRITE_ENDPOINT / EXPO_PUBLIC_APPWRITE_PROJECT_ID
  *
@@ -57,7 +57,7 @@ if (!endpoint || !projectId || !apiKey) {
       '  project  :',
       projectId ? '    ok' : '    EXPO_PUBLIC_APPWRITE_PROJECT_ID is not set in .env',
       '  api key  :',
-      apiKey ? '    ok' : '    APPWRITE_API_KEY is not set (create .env.provision.local, see APPWRITE_SETUP.md)',
+      apiKey ? '    ok' : '    APPWRITE_API_KEY is not set (create .env.provision.local, see docs/setup-appwrite.md)',
     ].join('\n'),
   );
   process.exit(1);
@@ -330,7 +330,7 @@ async function main() {
       `  EXPO_PUBLIC_APPWRITE_DATABASE_ID=${DATABASE_ID}`,
       `  EXPO_PUBLIC_APPWRITE_FUNCTION_ID=${FUNCTION.id}`,
       '',
-      'Remaining manual steps are listed in APPWRITE_SETUP.md (first admin user, email verification templates).',
+      'Remaining manual steps are listed in docs/setup-appwrite.md (first admin user, email verification templates).',
     ].join('\n'),
   );
 }
