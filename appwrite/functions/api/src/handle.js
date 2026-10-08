@@ -31,7 +31,8 @@ async function handle({ store, users, storage, headers, body, now, log = () => {
         throw unauthorized('Your session is no longer valid. Please sign in again.');
       }
       if (user.status === false) throw forbidden('This account has been disabled. Contact support.');
-    } else if (trigger !== 'schedule') {
+    } else if (trigger !== 'schedule' || action !== 'maintenance.run') {
+      // A run without a user is only legitimate as the scheduled maintenance job.
       throw unauthorized();
     }
 

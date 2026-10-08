@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 
 import type { BloodGroup, Urgency } from '@/domain';
+import { useAuth } from '@/providers/AuthProvider';
 import { requestService } from '@/services/requestService';
 
 export interface RequestDraft {
@@ -41,8 +42,19 @@ const RequestDraftContext = createContext<RequestDraftContextValue | null>(null)
 
 /** Keeps the Create -> Review hand-off in memory so Back from Review never loses input. */
 export function RequestDraftProvider({ children }: { children: ReactNode }) {
+  const userId = useAuth().user?.$id ?? null;
+  const [owner, setOwner] = useState(userId);
   const [draft, setDraftState] = useState<RequestDraft>(EMPTY_DRAFT);
   const [clientId, setClientId] = useState(() => requestService.newClientId());
+
+  // A draft (patient's blood group, hospital, ward, notes) belongs to the account
+  // that typed it; never hand it, or its submission id, to the next account on
+  // a shared device.
+  if (owner !== userId) {
+    setOwner(userId);
+    setDraftState(EMPTY_DRAFT);
+    setClientId(requestService.newClientId());
+  }
 
   const reset = useCallback(() => {
     setDraftState(EMPTY_DRAFT);

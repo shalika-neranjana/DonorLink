@@ -1,0 +1,12 @@
+appId: com.donorlink.app
+---
+- tapOn: "Profile"
+- scrollUntilVisible:
+    element: "Sign out"
+- tapOn: "Sign out"
+- tapOn:
+    text: "Sign out"
+    index: 1
+- extendedWaitUntil:
+    visible: "Create account"
+    timeout: 15000

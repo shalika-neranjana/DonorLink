@@ -16,6 +16,7 @@ import { useToast } from '@/components/ui/DonorLinkToast';
 import { DonorLinkText } from '@/components/ui/DonorLinkText';
 import {
   DISTRICT_NAMES,
+  LIMITS,
   ORGANIZATION_TYPES,
   ORGANIZATION_TYPE_LABELS,
   VERIFICATION_DOCUMENT_LABELS,
@@ -172,8 +173,8 @@ export default function VerificationDetailsScreen() {
           </View>
           <DonorLinkSelect label="District" required value={org.district} options={DISTRICT_OPTIONS} onChange={(v) => setOrg((o) => ({ ...o, district: v }))} searchable error={errors.district} />
           <DonorLinkInput label="Contact phone" required value={org.phone} onChangeText={(v) => setOrg((o) => ({ ...o, phone: v }))} error={errors.phone} keyboardType="phone-pad" leftIcon="call-outline" helperText="Shown to donors you accept." />
-          <DonorLinkInput label="Address" value={org.address} onChangeText={(v) => setOrg((o) => ({ ...o, address: v }))} leftIcon="location-outline" />
-          <DonorLinkInput label="Registration number" value={org.registrationNumber} onChangeText={(v) => setOrg((o) => ({ ...o, registrationNumber: v }))} leftIcon="reader-outline" />
+          <DonorLinkInput label="Address" value={org.address} onChangeText={(v) => setOrg((o) => ({ ...o, address: v }))} error={errors.address} maxLength={LIMITS.maxAddress} leftIcon="location-outline" />
+          <DonorLinkInput label="Registration number" value={org.registrationNumber} onChangeText={(v) => setOrg((o) => ({ ...o, registrationNumber: v }))} error={errors.registrationNumber} maxLength={LIMITS.maxRegistrationNumber} leftIcon="reader-outline" />
         </View>
       ) : null}
 

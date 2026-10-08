@@ -2,6 +2,7 @@ const domain = require('../lib/domain');
 const { validation, forbidden, notFound, conflict } = require('../lib/errors');
 const {
   audit,
+  claimAudit,
   notify,
   notificationContext,
   transitionRequest,
@@ -36,12 +37,25 @@ async function confirmDonation(ctx, payload) {
   if (!domain.canTransitionDonation(donation.status, 'completed')) {
     throw conflict('invalid_state', `This donation is already ${domain.DONATION_STATUS_LABELS[donation.status].toLowerCase()}.`);
   }
+  // The requester and hospital staff may both press Confirm at the same moment;
+  // only the caller that writes this fixed-ID audit row goes on to count it.
+  const claimId = `dc${donation.$id}`;
+  if (!(await claimAudit(ctx, claimId, 'donation.completed', 'donation', donation.$id, 'Donation confirmed'))) {
+    throw conflict('invalid_state', 'This donation is already completed.');
+  }
+
   const now = iso(ctx.now());
-  const updated = await ctx.store.update('donations', donation.$id, {
-    status: 'completed',
-    completedAt: now,
-    confirmedBy: ctx.userId,
-  });
+  let updated;
+  try {
+    updated = await ctx.store.update('donations', donation.$id, {
+      status: 'completed',
+      completedAt: now,
+      confirmedBy: ctx.userId,
+    });
+  } catch (error) {
+    await ctx.store.remove('audit_logs', claimId).catch(() => undefined);
+    throw error;
+  }
   if (donation.responseId) {
     const response = await ctx.store.get('request_responses', donation.responseId);
     if (response && domain.canTransitionResponse(response.status, 'completed')) {
@@ -50,15 +64,13 @@ async function confirmDonation(ctx, payload) {
   }
   const donor = await ctx.store.get('donor_profiles', donation.donorId);
   if (donor) {
-    await ctx.store.update('donor_profiles', donor.$id, {
-      donationCount: (donor.donationCount || 0) + 1,
-      lastDonationDate: now,
-    });
+    await ctx.store.increment('donor_profiles', donor.$id, 'donationCount');
+    await ctx.store.update('donor_profiles', donor.$id, { lastDonationDate: now });
   }
 
-  const completed = (request.unitsCompleted || 0) + 1;
-  request = await ctx.store.update('blood_requests', request.$id, { unitsCompleted: completed });
-  if (completed >= request.units) {
+  // Atomic, so confirming two different donations at once counts both.
+  request = await ctx.store.increment('blood_requests', request.$id, 'unitsCompleted');
+  if ((request.unitsCompleted || 0) >= request.units) {
     if (request.status === 'partially_fulfilled' || request.status === 'donors_contacted') {
       request = await transitionRequest(ctx, request, 'fulfilled', 'All units donated');
     }
@@ -69,7 +81,6 @@ async function confirmDonation(ctx, payload) {
   }
 
   await notify(ctx, donation.donorId, 'donation_completed', notificationContext(request));
-  await audit(ctx, 'donation.completed', 'donation', donation.$id, 'Donation confirmed');
   return { donation: updated, request };
 }
 

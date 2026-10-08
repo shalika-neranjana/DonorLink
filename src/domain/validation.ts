@@ -38,6 +38,12 @@ export const LIMITS = {
   minPasswordLength: 8,
   maxRequestHorizonDays: 30,
   maxInventoryUnits: 100000,
+  // Optional free text; each matches its Appwrite column size (appwrite/schema.mjs).
+  maxCity: 60,
+  maxWardUnit: 80,
+  maxRelationship: 60,
+  maxAddress: 200,
+  maxRegistrationNumber: 60,
 } as const;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -58,6 +64,11 @@ export function isValidPhone(value: string): boolean {
 
 function str(value: unknown): string {
   return typeof value === 'string' ? value.trim() : '';
+}
+
+/** Adds an error when optional free text is longer than its column allows. */
+function checkLength(errors: FieldErrors, key: string, value: string, max: number, label: string) {
+  if (value.length > max) errors[key] = `${label} must be ${max} characters or fewer.`;
 }
 
 function finish<T>(errors: FieldErrors, value: T): Validated<T> {
@@ -150,6 +161,7 @@ export function validateProfile(input: Partial<ProfileInput>): Validated<Profile
 
   const district = str(input.district);
   if (district && !findDistrict(district)) errors.district = 'Choose a district from the list.';
+  checkLength(errors, 'city', str(input.city), LIMITS.maxCity, 'City');
 
   if (input.location && !isValidCoordinates(input.location)) errors.location = 'Location is not valid.';
 
@@ -214,6 +226,9 @@ export function validateCreateRequest(
 
   const notes = str(input.notes);
   if (notes.length > LIMITS.maxNotes) errors.notes = `Notes must be ${LIMITS.maxNotes} characters or fewer.`;
+  checkLength(errors, 'city', str(input.city), LIMITS.maxCity, 'City');
+  checkLength(errors, 'wardUnit', str(input.wardUnit), LIMITS.maxWardUnit, 'Ward / unit');
+  checkLength(errors, 'relationship', str(input.relationship), LIMITS.maxRelationship, 'Relationship');
 
   let requiredBy: string | null = null;
   if (input.requiredBy) {
@@ -272,6 +287,9 @@ export function validateAvailability(
   if (radius === undefined || !Number.isFinite(radius)) errors.radiusKm = 'Choose a matching radius.';
   else if (radius < LIMITS.minRadiusKm || radius > LIMITS.maxRadiusKm) {
     errors.radiusKm = `Radius must be between ${LIMITS.minRadiusKm} and ${LIMITS.maxRadiusKm} km.`;
+  }
+  if (input.emergencyAlerts !== undefined && typeof input.emergencyAlerts !== 'boolean') {
+    errors.emergencyAlerts = 'Choose whether to receive emergency alerts.';
   }
   return finish(errors, {
     availability: input.availability as Availability,
@@ -377,6 +395,9 @@ export function validateOrganizationRegistration(
   const phone = str(input.phone);
   if (!phone) errors.phone = 'Phone is required.';
   else if (!isValidPhone(phone)) errors.phone = 'Enter a valid phone number.';
+  checkLength(errors, 'city', str(input.city), LIMITS.maxCity, 'City');
+  checkLength(errors, 'address', str(input.address), LIMITS.maxAddress, 'Address');
+  checkLength(errors, 'registrationNumber', str(input.registrationNumber), LIMITS.maxRegistrationNumber, 'Registration number');
   if (input.location && !isValidCoordinates(input.location)) errors.location = 'Location is not valid.';
   return finish(errors, {
     name,

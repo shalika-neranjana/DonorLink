@@ -218,35 +218,48 @@ async function createRequest(ctx, payload) {
   const autoVerify =
     ctx.isAdmin || (!!org && org.verificationStatus === 'verified' && domain.isOrganizationMember(ctx.labels, org.$id));
 
-  let request = await ctx.store.create(
-    'blood_requests',
-    requestId,
-    {
-      requesterId: ctx.userId,
-      requesterName,
-      bloodGroup: input.bloodGroup,
-      units: input.units,
-      unitsAccepted: 0,
-      unitsCompleted: 0,
-      contactedCount: 0,
-      urgency: input.urgency,
-      status: 'submitted',
-      verificationStatus: 'pending',
-      hospitalId: org ? org.$id : null,
-      hospitalName: input.hospitalName,
-      district: input.district,
-      city: input.city ?? (org ? org.city : null) ?? null,
-      wardUnit: input.wardUnit ?? null,
-      approxLat: location ? location.lat : null,
-      approxLng: location ? location.lng : null,
-      requiredBy: input.requiredBy ?? null,
-      expiresAt: iso(expiresAt),
-      notes: input.notes ?? null,
-      relationship: input.relationship ?? null,
-      statusHistory: JSON.stringify([{ status: 'submitted', at: iso(now) }]),
-    },
-    requestPerms({ requesterId: ctx.userId, hospitalId: org ? org.$id : null }),
-  );
+  let request;
+  try {
+    request = await ctx.store.create(
+      'blood_requests',
+      requestId,
+      {
+        requesterId: ctx.userId,
+        requesterName,
+        bloodGroup: input.bloodGroup,
+        units: input.units,
+        unitsAccepted: 0,
+        unitsCompleted: 0,
+        contactedCount: 0,
+        urgency: input.urgency,
+        status: 'submitted',
+        verificationStatus: 'pending',
+        hospitalId: org ? org.$id : null,
+        hospitalName: input.hospitalName,
+        district: input.district,
+        city: input.city ?? (org ? org.city : null) ?? null,
+        wardUnit: input.wardUnit ?? null,
+        approxLat: location ? location.lat : null,
+        approxLng: location ? location.lng : null,
+        requiredBy: input.requiredBy ?? null,
+        expiresAt: iso(expiresAt),
+        notes: input.notes ?? null,
+        relationship: input.relationship ?? null,
+        statusHistory: JSON.stringify([{ status: 'submitted', at: iso(now) }]),
+      },
+      requestPerms({ requesterId: ctx.userId, hospitalId: org ? org.$id : null }),
+    );
+  } catch (error) {
+    // The same client id arrived twice at once (double tap, or a retry while
+    // the first call was still running): the row ID makes the database refuse
+    // the second create, so answer it like any other duplicate.
+    if (error && error.code === 409) {
+      const existing = await ctx.store.get('blood_requests', requestId);
+      if (existing && existing.requesterId === ctx.userId) return { request: existing, duplicate: true };
+      if (existing) throw forbidden();
+    }
+    throw error;
+  }
 
   await audit(ctx, 'request.created', 'blood_request', request.$id, `${input.urgency} request for ${input.units} x ${input.bloodGroup} at ${input.hospitalName}`);
 
@@ -287,6 +300,13 @@ async function verifyRequest(ctx, payload) {
   const request = await loadRequest(ctx, payload.requestId);
   if (!domain.canVerifyRequest(accessContext(ctx, request))) {
     throw forbidden('Only the addressed hospital or an administrator can verify this request.');
+  }
+  if (!ctx.isAdmin) {
+    // Membership alone is not enough once an admin has withdrawn the hospital's verification.
+    const org = await ctx.store.get('organizations', request.hospitalId);
+    if (!org || org.verificationStatus !== 'verified') {
+      throw forbidden('Your organization must be verified before it can verify requests.');
+    }
   }
   if (!['submitted', 'pending_verification'].includes(request.status)) {
     throw conflict('invalid_state', 'This request has already been reviewed.');
@@ -427,7 +447,8 @@ async function completeRequest(ctx, payload) {
 async function expireRequest(ctx, request) {
   if (!domain.canTransitionRequest(request.status, 'expired')) return null;
   const updated = await transitionRequest(ctx, request, 'expired', 'Expired');
-  await closeResponses(ctx, updated, { notifyAccepted: false });
+  // Donors who already accepted had a scheduled donation; tell them it is off.
+  await closeResponses(ctx, updated, { notifyAccepted: true });
   await notify(ctx, updated.requesterId, 'request_expired', notificationContext(updated));
   await audit(ctx, 'request.expired', 'blood_request', request.$id, 'Request expired');
   return updated;

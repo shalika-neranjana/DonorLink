@@ -18,7 +18,7 @@ import {
 import { DonorLinkBanner } from '@/components/ui/DonorLinkStates';
 import { DonorLinkScreen } from '@/components/ui/DonorLinkScreen';
 import { DonorLinkText } from '@/components/ui/DonorLinkText';
-import { DISTRICT_NAMES, URGENCY_DESCRIPTIONS, URGENCY_LABELS, validateCreateRequest, type Urgency } from '@/domain';
+import { DISTRICT_NAMES, LIMITS, URGENCY_DESCRIPTIONS, URGENCY_LABELS, validateCreateRequest, type Urgency } from '@/domain';
 import { useRequestDraft } from '@/features/requester/RequestDraftContext';
 import { useResource } from '@/hooks/useResource';
 import { useAuth } from '@/providers/AuthProvider';
@@ -147,7 +147,7 @@ export default function CreateRequestScreen() {
 
       {showMore ? (
         <View className="gap-4">
-          <DonorLinkInput label="Ward / unit" value={draft.wardUnit} onChangeText={(wardUnit) => patch({ wardUnit })} leftIcon="bed-outline" placeholder="e.g. Ward 12, ICU" />
+          <DonorLinkInput label="Ward / unit" value={draft.wardUnit} onChangeText={(wardUnit) => patch({ wardUnit }, 'wardUnit')} error={errors.wardUnit} maxLength={LIMITS.maxWardUnit} leftIcon="bed-outline" placeholder="e.g. Ward 12, ICU" />
           <View className="gap-2">
             <DonorLinkText variant="label" tone="secondary">
               Who is this for?

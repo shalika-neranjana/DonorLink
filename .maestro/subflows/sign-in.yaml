@@ -1,0 +1,20 @@
+# Reusable: sign in from a cold start. Needs EMAIL and PASSWORD (passed with -e).
+appId: com.donorlink.app
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "I already have an account"
+    timeout: 20000
+- tapOn: "I already have an account"
+- tapOn: "Email"
+- inputText: ${EMAIL}
+- tapOn: "Password"
+- inputText: ${PASSWORD}
+- hideKeyboard
+- tapOn:
+    text: "Sign in"
+    index: 1
+- extendedWaitUntil:
+    visible: "Home"
+    timeout: 20000

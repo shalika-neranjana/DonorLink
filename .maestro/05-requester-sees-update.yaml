@@ -1,0 +1,14 @@
+# E2E-05 / TC-PATIENT-021: the requester sees the donor's acceptance in tracking and history.
+appId: com.donorlink.app
+env:
+  EMAIL: ${REQUESTER_EMAIL}
+  PASSWORD: ${REQUESTER_PASSWORD}
+---
+- runFlow: subflows/sign-in.yaml
+- tapOn: "Alerts"
+- assertVisible: ".*accepted.*"
+- tapOn: "Requests"
+- tapOn: "National Hospital of Sri Lanka"
+- assertVisible: "Donor responses"
+- tapOn: "Track this request"
+- assertVisible: ".*Blood secured.*|.*Response received.*"

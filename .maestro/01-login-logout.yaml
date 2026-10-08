@@ -1,0 +1,12 @@
+# E2E-01 / TC-AUTH-020: existing requester signs in, sees the four fixed tabs, signs out.
+appId: com.donorlink.app
+env:
+  EMAIL: ${REQUESTER_EMAIL}
+  PASSWORD: ${REQUESTER_PASSWORD}
+---
+- runFlow: subflows/sign-in.yaml
+- assertVisible: "Home"
+- assertVisible: "Requests"
+- assertVisible: "Alerts"
+- assertVisible: "Profile"
+- runFlow: subflows/sign-out.yaml

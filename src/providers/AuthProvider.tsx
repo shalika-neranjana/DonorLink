@@ -4,6 +4,7 @@ import { isAdmin, isOrganizationMember, organizationIdsFromLabels } from '@/doma
 import { authApi, type AuthUser } from '@/lib/appwrite/auth';
 import { isAppwriteConfigured } from '@/lib/appwrite/config';
 import { AppError, toAppError } from '@/lib/appwrite/errors';
+import { matchCache } from '@/features/requester/matchCache';
 import { clearImageCache } from '@/lib/appwrite/files';
 import { setSessionExpiredHandler } from '@/hooks/useResource';
 import { profileService } from '@/services/profileService';
@@ -97,6 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setDonorProfile(null);
     setEmailPromptDismissed(false);
     clearImageCache();
+    matchCache.clear();
     setStatus('signedOut');
   }, []);
 

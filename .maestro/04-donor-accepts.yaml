@@ -1,0 +1,19 @@
+# E2E-04 / TC-DONOR-020: an available O+/O- donor gets the alert, confirms Accept,
+# and sees the outcome screen. Run after 02 and 03.
+appId: com.donorlink.app
+env:
+  EMAIL: ${DONOR_EMAIL}
+  PASSWORD: ${DONOR_PASSWORD}
+---
+- runFlow: subflows/sign-in.yaml
+- tapOn: "Alerts"
+- tapOn: ".*O\+ blood needed.*"
+- assertVisible: "Accept"
+- assertVisible: "Decline"
+- tapOn: "Accept this request and donate"
+- assertVisible: "Accept this request?"
+- tapOn: "Yes, I'll donate"
+- extendedWaitUntil:
+    visible: "You've accepted this request"
+    timeout: 20000
+- tapOn: "Back to home"
