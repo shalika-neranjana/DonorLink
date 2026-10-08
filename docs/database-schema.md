@@ -1,6 +1,6 @@
 # DonorLink database schema
 
-> Generated from [`appwrite/schema.mjs`](appwrite/schema.mjs) by `npm run docs:schema`. Do not edit by hand.
+> Generated from [`appwrite/schema.mjs`](../appwrite/schema.mjs) by `npm run docs:schema`. Do not edit by hand.
 
 Database: **DonorLinkDB** (ID `donorlink`). All tables have **row security enabled**.
 
@@ -204,7 +204,7 @@ Indexes: `idx_org_group` (unique: organizationId, bloodGroup, component); `idx_o
 
 ### `notifications`
 
-In-app notifications. Owner can read, mark read and delete; created by the function.
+In-app notifications. Owner can read only; created and marked read by the function.
 
 Table permissions: none (row-level only)
 

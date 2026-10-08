@@ -49,7 +49,7 @@ module.exports = defineConfig([
     languageOptions: { sourceType: 'module', globals: nodeGlobals },
   },
   {
-    files: ['**/__tests__/**', 'jest.setup.ts'],
+    files: ['**/__tests__/**', 'src/test/jest.setup.ts'],
     languageOptions: { globals: jestGlobals },
     rules: { '@typescript-eslint/no-require-imports': 'off' },
   },

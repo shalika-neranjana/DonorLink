@@ -1,10 +1,10 @@
 /**
- * Generates DATABASE_SCHEMA.md from appwrite/schema.mjs so the documentation
+ * Generates docs/database-schema.md from appwrite/schema.mjs so the documentation
  * can never drift from what `npm run appwrite:provision` actually creates.
  *
  * Usage: npm run docs:schema
  */
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -25,7 +25,7 @@ const typeLabel = (c) => {
 const lines = [];
 lines.push('# DonorLink database schema');
 lines.push('');
-lines.push('> Generated from [`appwrite/schema.mjs`](appwrite/schema.mjs) by `npm run docs:schema`. Do not edit by hand.');
+lines.push('> Generated from [`appwrite/schema.mjs`](../appwrite/schema.mjs) by `npm run docs:schema`. Do not edit by hand.');
 lines.push('');
 lines.push(`Database: **${DATABASE_NAME}** (ID \`${DATABASE_ID}\`). All tables have **row security enabled**.`);
 lines.push('');
@@ -75,5 +75,6 @@ lines.push('');
 lines.push(DIRECTORY_HOSPITALS.map((h) => `- ${h.name} (${h.district})`).join('\n'));
 lines.push('');
 
-writeFileSync(join(root, 'DATABASE_SCHEMA.md'), lines.join('\n'));
-console.log('Wrote DATABASE_SCHEMA.md');
+mkdirSync(join(root, 'docs'), { recursive: true });
+writeFileSync(join(root, 'docs', 'database-schema.md'), lines.join('\n'));
+console.log('Wrote docs/database-schema.md');
