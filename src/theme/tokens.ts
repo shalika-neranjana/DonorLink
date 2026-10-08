@@ -12,7 +12,7 @@ export const lightColors = {
   subtle: '#eef2f6',
   fg: '#0f172a',
   fgSecondary: '#475569',
-  fgMuted: '#64748b',
+  fgMuted: '#5b6b80',
   border: '#e2e8f0',
   borderStrong: '#cbd5e1',
   primary: '#1d5fd1',

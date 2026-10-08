@@ -1,0 +1,18 @@
+# E2E-06 / TC-DONOR-021: a second donor declines with a reason. Needs a second
+# pending invitation for DONOR2 (create another request first with flow 02 + 03).
+appId: com.donorlink.app
+tags:
+  - manual
+env:
+  EMAIL: ${DONOR2_EMAIL}
+  PASSWORD: ${DONOR2_PASSWORD}
+---
+- runFlow: subflows/sign-in.yaml
+- tapOn: "Alerts"
+- tapOn: ".*blood needed.*"
+- tapOn: "Decline this request"
+- tapOn: "Too far away"
+- tapOn: "Decline request"
+- extendedWaitUntil:
+    visible: "You've declined this request"
+    timeout: 20000

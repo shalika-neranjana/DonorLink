@@ -11,7 +11,7 @@ import { DonorLinkScreen } from '@/components/ui/DonorLinkScreen';
 import { DonorLinkBanner } from '@/components/ui/DonorLinkStates';
 import { useToast } from '@/components/ui/DonorLinkToast';
 import { DonorLinkText } from '@/components/ui/DonorLinkText';
-import { DISTRICT_NAMES, validateProfile } from '@/domain';
+import { DISTRICT_NAMES, LIMITS, validateProfile } from '@/domain';
 import { useAvatarUri } from '@/hooks/useAvatarUri';
 import { useFormState } from '@/hooks/useFormState';
 import { getErrorMessage } from '@/lib/appwrite/errors';
@@ -124,7 +124,7 @@ export default function EditProfileScreen() {
       <DonorLinkInput label="Mobile number" value={values.phone} onChangeText={(v) => setValue('phone', v)} error={errors.phone} leftIcon="call-outline" keyboardType="phone-pad" helperText="Never shown to other users." />
       <BloodGroupPicker value={values.bloodGroup} onChange={(g) => setValue('bloodGroup', g)} error={errors.bloodGroup} helperText="Self-reported. Changing it re-evaluates which requests match you." />
       <DonorLinkSelect label="District" value={values.district} options={DISTRICT_OPTIONS} onChange={(d) => setValue('district', d)} searchable error={errors.district} />
-      <DonorLinkInput label="Town or area" value={values.city} onChangeText={(v) => setValue('city', v)} leftIcon="location-outline" autoCapitalize="words" />
+      <DonorLinkInput label="Town or area" value={values.city} onChangeText={(v) => setValue('city', v)} maxLength={LIMITS.maxCity} leftIcon="location-outline" autoCapitalize="words" />
     </DonorLinkScreen>
   );
 }

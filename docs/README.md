@@ -7,6 +7,7 @@
 | [database-schema.md](database-schema.md) | Tables, columns and indexes (generated, see below) |
 | [implementation-plan.md](implementation-plan.md) | Delivery phases and current status |
 | [qa-report.md](qa-report.md) | QA audit and test report |
+| [qa-test-matrix.md](qa-test-matrix.md) | Test case matrix for the QA audit |
 
 `database-schema.md` is generated from `appwrite/schema.mjs`. Do not edit it by hand; run:
 

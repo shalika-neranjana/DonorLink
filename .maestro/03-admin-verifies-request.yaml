@@ -1,0 +1,17 @@
+# E2E-03 / TC-ADMIN-020: admin verifies the pending request so matching contacts donors.
+appId: com.donorlink.app
+env:
+  EMAIL: ${ADMIN_EMAIL}
+  PASSWORD: ${ADMIN_PASSWORD}
+---
+- runFlow: subflows/sign-in.yaml
+- tapOn: "Profile"
+- scrollUntilVisible:
+    element: "Open admin console"
+- tapOn: "Open admin console"
+- tapOn: "Requests"
+- tapOn: "National Hospital of Sri Lanka"
+- tapOn: "Verify"
+- extendedWaitUntil:
+    visible: "Request verified"
+    timeout: 20000

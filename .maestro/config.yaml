@@ -1,0 +1,7 @@
+# Maestro E2E suite for DonorLink (critical flows only).
+# Status: written during the 2026-10-09 QA audit, NOT EXECUTED (no emulator or
+# development build was available). See .maestro/README.md before running.
+flows:
+  - "*.yaml"
+excludeTags:
+  - manual

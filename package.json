@@ -88,7 +88,7 @@
       "<rootDir>/src/test/jest.setup.ts"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@gluestack-ui/.*|nativewind|react-native-css|react-native-reanimated|react-native-worklets|react-native-gesture-handler|react-native-safe-area-context))"
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@gluestack-ui/.*|nativewind|react-native-css|react-native-reanimated|react-native-worklets|react-native-gesture-handler|react-native-safe-area-context|standard-navigation))"
     ]
   },
   "overrides": {

@@ -3,6 +3,7 @@ const domain = require('../lib/domain');
 const { validation, notFound, conflict } = require('../lib/errors');
 const {
   audit,
+  claimAudit,
   notify,
   notifyOrganization,
   notificationContext,
@@ -35,6 +36,10 @@ async function acceptResponse(ctx, payload) {
   if (!OPEN_FOR_DONORS.includes(request.status)) {
     await ctx.store.update('request_responses', response.$id, { status: 'expired' });
     throw conflict('request_closed', `This request is no longer open (${domain.REQUEST_STATUS_LABELS[request.status].toLowerCase()}).`);
+  }
+  // Maintenance runs every 15 minutes; until then an overdue request still looks open.
+  if (request.expiresAt && new Date(request.expiresAt).getTime() <= ctx.now().getTime()) {
+    throw conflict('request_closed', 'This request has expired and is no longer open.');
   }
   if ((request.unitsAccepted || 0) >= request.units) {
     await ctx.store.update('request_responses', response.$id, { status: 'expired' });
@@ -122,16 +127,26 @@ async function declineResponse(ctx, payload) {
   if (reasonError) throw validation({ reason: reasonError });
   const reason = typeof payload.reason === 'string' ? payload.reason.trim() : '';
 
-  const updated = await ctx.store.update('request_responses', response.$id, {
-    status: 'declined',
-    declineReason: reason || null,
-    respondedAt: iso(ctx.now()),
-  });
+  // A double tap reads "pending" twice; the audit row's fixed ID lets only one through.
+  const claimed = await claimAudit(ctx, `rd${response.$id}`, 'response.declined', 'blood_request', response.requestId, 'Donor declined request');
+  if (!claimed) throw conflict('already_declined', 'You already declined this request.');
+
+  let updated;
+  try {
+    updated = await ctx.store.update('request_responses', response.$id, {
+      status: 'declined',
+      declineReason: reason || null,
+      respondedAt: iso(ctx.now()),
+    });
+  } catch (error) {
+    // Free the claim so the donor can try again.
+    await ctx.store.remove('audit_logs', `rd${response.$id}`).catch(() => undefined);
+    throw error;
+  }
   const request = await ctx.store.get('blood_requests', response.requestId);
   if (request) {
     await notify(ctx, request.requesterId, 'donor_declined', notificationContext(request));
   }
-  await audit(ctx, 'response.declined', 'blood_request', response.requestId, 'Donor declined request');
   return { response: updated };
 }
 

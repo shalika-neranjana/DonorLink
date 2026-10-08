@@ -4,7 +4,7 @@ import { DonorLinkButton } from '@/components/ui/DonorLinkButton';
 import { DonorLinkInput } from '@/components/ui/DonorLinkInput';
 import { DonorLinkSelect } from '@/components/ui/DonorLinkPickers';
 import { DonorLinkBanner } from '@/components/ui/DonorLinkStates';
-import { districtCentre, DISTRICT_NAMES } from '@/domain';
+import { districtCentre, DISTRICT_NAMES, LIMITS } from '@/domain';
 import { OnboardingStepScreen } from '@/features/onboarding/OnboardingStepScreen';
 import { useOnboarding } from '@/features/onboarding/OnboardingContext';
 import { useApproximateLocation } from '@/hooks/useApproximateLocation';
@@ -67,7 +67,7 @@ export default function LocationStep() {
         error={error}
         helperText="You can always change this later in Settings."
       />
-      <DonorLinkInput label="Town or area" value={draft.city} onChangeText={(city) => update({ city })} leftIcon="location-outline" placeholder="Optional" autoCapitalize="words" />
+      <DonorLinkInput label="Town or area" value={draft.city} onChangeText={(city) => update({ city })} maxLength={LIMITS.maxCity} leftIcon="location-outline" placeholder="Optional" autoCapitalize="words" />
     </OnboardingStepScreen>
   );
 }

@@ -158,8 +158,16 @@ async function reviewVerification(ctx, payload) {
   }
 
   let organization = null;
-  if (verification.subjectType === 'organization' && payload.decision === 'verified') {
-    organization = await createOrganizationFromVerification(ctx, verification);
+  if (verification.subjectType === 'organization') {
+    if (verification.organizationId) {
+      // Already approved once: change that organization's standing instead of
+      // creating a second organization and membership.
+      organization = await ctx.store.update('organizations', verification.organizationId, {
+        verificationStatus: payload.decision,
+      });
+    } else if (payload.decision === 'verified') {
+      organization = await createOrganizationFromVerification(ctx, verification);
+    }
   }
 
   const note = typeof payload.note === 'string' ? payload.note.trim().slice(0, 300) : '';

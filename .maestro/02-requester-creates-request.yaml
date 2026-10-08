@@ -1,0 +1,25 @@
+# E2E-02 / TC-PATIENT-020: requester creates a critical request at a listed hospital,
+# reviews it, submits once, and lands on matching/tracking.
+appId: com.donorlink.app
+env:
+  EMAIL: ${REQUESTER_EMAIL}
+  PASSWORD: ${REQUESTER_PASSWORD}
+---
+- runFlow: subflows/sign-in.yaml
+- tapOn: "Request blood"
+- tapOn: "Blood group O positive"
+- tapOn: "Critical.*"
+- tapOn: "Hospital.*"
+- tapOn: "National Hospital of Sri Lanka"
+- tapOn: "Add ward, notes or who it's for"
+- tapOn: "Ward / unit"
+- inputText: "QA E2E ward"
+- hideKeyboard
+- tapOn: "Review request"
+- assertVisible: "Check the details before sending"
+- tapOn: "Submit request"
+- extendedWaitUntil:
+    visible: "Request submitted"
+    timeout: 20000
+- assertNotVisible: "Request not sent"
+- runFlow: subflows/sign-out.yaml

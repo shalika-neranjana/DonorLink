@@ -97,6 +97,35 @@ async function audit(ctx, action, entityType, entityId, summary, metadata) {
   }
 }
 
+/**
+ * Writes an audit entry under a fixed row ID and reports whether this call
+ * wrote it. The database refuses a second row with the same ID, so this is an
+ * atomic "only once" guard for actions that would otherwise race (two people
+ * confirming the same donation, a double-tapped decline). Row IDs are at most
+ * 36 characters: a 2-letter prefix plus a 20-character Appwrite ID fits.
+ */
+async function claimAudit(ctx, rowId, action, entityType, entityId, summary) {
+  try {
+    await ctx.store.create(
+      'audit_logs',
+      rowId,
+      {
+        actorId: ctx.userId || 'system',
+        actorRole: ctx.isAdmin ? 'admin' : ctx.userId ? 'user' : 'system',
+        action,
+        entityType,
+        entityId,
+        summary: String(summary).slice(0, 300),
+      },
+      [Permission.read(Role.label(domain.LABEL_ADMIN))],
+    );
+    return true;
+  } catch (error) {
+    if (error && error.code === 409) return false;
+    throw error;
+  }
+}
+
 const PREF_BY_CATEGORY = {
   emergency: 'emergencyRequests',
   requests: 'requestUpdates',
@@ -269,6 +298,7 @@ module.exports = {
   requestPerms,
   ownerReadPerms,
   audit,
+  claimAudit,
   notify,
   notifyOrganization,
   organizationMemberIds,
