@@ -423,6 +423,7 @@ export const FUNCTION = {
     'rows.write',
     'buckets.read',
     'files.read',
+    'files.write',
   ],
 };
 

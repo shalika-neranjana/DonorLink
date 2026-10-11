@@ -6,6 +6,7 @@ const verification = require('./verification');
 const organization = require('./organization');
 const admin = require('./admin');
 const platform = require('./platform');
+const account = require('./account');
 
 /**
  * Action registry. Every action receives (ctx, payload) where ctx.userId is
@@ -15,6 +16,7 @@ const platform = require('./platform');
 const actions = {
   'profile.save': profile.saveProfile,
   'donor.updateAvailability': profile.updateAvailability,
+  'account.delete': account.deleteAccount,
 
   'request.create': request.createRequest,
   'request.verify': request.verifyRequest,

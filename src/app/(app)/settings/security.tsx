@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { DonorLinkButton } from '@/components/ui/DonorLinkButton';
 import { DonorLinkCard } from '@/components/ui/DonorLinkCard';
+import { DonorLinkConfirmDialog } from '@/components/ui/DonorLinkModal';
 import { DonorLinkInput } from '@/components/ui/DonorLinkInput';
 import { DonorLinkScreen } from '@/components/ui/DonorLinkScreen';
 import { DonorLinkBanner } from '@/components/ui/DonorLinkStates';
@@ -11,9 +12,15 @@ import { validatePasswordField } from '@/domain';
 import { authApi } from '@/lib/appwrite/auth';
 import { getErrorMessage } from '@/lib/appwrite/errors';
 import { testAppwriteConnection } from '@/lib/appwrite/testConnection';
+import { useAuth } from '@/providers/AuthProvider';
 
 export default function SecuritySettingsScreen() {
   const toast = useToast();
+  const { deleteAccount } = useAuth();
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteText, setDeleteText] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -57,6 +64,24 @@ export default function SecuritySettingsScreen() {
     }
   }
 
+  function closeDelete() {
+    setConfirmDelete(false);
+    setDeleteText('');
+    setDeleteError(null);
+  }
+
+  async function removeAccount() {
+    if (deleting || deleteText.trim().toUpperCase() !== 'DELETE') return;
+    setDeleting(true);
+    setDeleteError(null);
+    try {
+      await deleteAccount();
+    } catch (e) {
+      setDeleteError(getErrorMessage(e));
+      setDeleting(false);
+    }
+  }
+
   return (
     <DonorLinkScreen header={{ title: 'Security' }}>
       <DonorLinkCard className="gap-4">
@@ -77,6 +102,28 @@ export default function SecuritySettingsScreen() {
         {check.status === 'failed' ? <DonorLinkBanner tone="error" title="Can't reach DonorLink" message={check.message ?? 'Please try again.'} /> : null}
         <DonorLinkButton title="Run check" variant="outline" leftIcon="pulse" loading={check.status === 'checking'} onPress={() => void runCheck()} />
       </DonorLinkCard>
+
+      <DonorLinkCard className="gap-3">
+        <DonorLinkText variant="title">Delete account</DonorLinkText>
+        <DonorLinkText variant="bodySmall" tone="secondary">
+          Permanently deletes your account, profile, verification documents and notifications. Open blood requests you made are cancelled. This can&apos;t be undone.
+        </DonorLinkText>
+        <DonorLinkButton title="Delete my account" variant="emergency" leftIcon="trash-outline" onPress={() => setConfirmDelete(true)} />
+      </DonorLinkCard>
+
+      <DonorLinkConfirmDialog
+        visible={confirmDelete}
+        title="Delete your account?"
+        message="This permanently removes your data and signs you out. Type DELETE to confirm."
+        confirmLabel="Delete permanently"
+        tone="danger"
+        loading={deleting}
+        onCancel={closeDelete}
+        onConfirm={() => void removeAccount()}
+      >
+        {deleteError ? <DonorLinkBanner tone="error" message={deleteError} /> : null}
+        <DonorLinkInput label="Type DELETE" value={deleteText} onChangeText={setDeleteText} autoCapitalize="characters" autoCorrect={false} />
+      </DonorLinkConfirmDialog>
     </DonorLinkScreen>
   );
 }

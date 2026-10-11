@@ -180,6 +180,10 @@ class FakeUsers {
   async updateStatus({ userId, status }) {
     this.map.get(userId).status = status;
   }
+
+  async delete({ userId }) {
+    this.map.delete(userId);
+  }
 }
 
 class FakeStorage {
@@ -189,6 +193,10 @@ class FakeStorage {
 
   addFile(bucketId, fileId, permissions) {
     this.files.set(`${bucketId}/${fileId}`, { $id: fileId, $permissions: permissions });
+  }
+
+  async deleteFile({ bucketId, fileId }) {
+    this.files.delete(`${bucketId}/${fileId}`);
   }
 
   async getFile({ bucketId, fileId }) {
