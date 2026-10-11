@@ -183,7 +183,7 @@ export default function GalleryScreen() {
         <DonorLinkRadioCards label="Urgency" value={urgency} onChange={setUrgency} options={[
           { value: 'critical', title: 'Critical', description: 'Within hours', icon: 'alert-circle', tone: 'emergency' },
           { value: 'urgent', title: 'Urgent', description: 'Within a day', icon: 'time', tone: 'warning' },
-          { value: 'standard', title: 'Standard', description: 'A few days', icon: 'calendar-outline' },
+          { value: 'standard', title: 'Normal', description: 'A few days', icon: 'calendar-outline' },
         ]} />
         <DonorLinkSelect label="District" value={city} onChange={setCity} options={['Colombo', 'Kandy', 'Galle'].map((c) => ({ value: c, label: c }))} placeholder="Choose" />
         <View className="flex-row flex-wrap gap-2">

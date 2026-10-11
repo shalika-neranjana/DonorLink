@@ -65,7 +65,7 @@ export type Urgency = (typeof URGENCY_LEVELS)[number];
 export const URGENCY_LABELS: Record<Urgency, string> = {
   critical: 'Critical',
   urgent: 'Urgent',
-  standard: 'Standard',
+  standard: 'Normal',
 };
 
 export const URGENCY_DESCRIPTIONS: Record<Urgency, string> = {
