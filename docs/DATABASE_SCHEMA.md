@@ -1,6 +1,6 @@
 # DonorLink database schema
 
-> Generated from [`appwrite/schema.mjs`](appwrite/schema.mjs) by `npm run docs:schema`. Do not edit by hand.
+> Generated from [`appwrite/schema.mjs`](../appwrite/schema.mjs) by `npm run docs:schema`. Do not edit by hand.
 
 Database: **DonorLinkDB** (ID `donorlink`). All tables have **row security enabled**.
 

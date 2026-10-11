@@ -118,7 +118,7 @@ From there admins can promote other admins, approve organizations and review ver
 | `npm run lint` | ESLint |
 | `npm test` | All tests (domain rules, backend workflows, screens, consistency) |
 | `npm run appwrite:provision` | Create/update the backend (idempotent) |
-| `npm run docs:schema` | Regenerate `DATABASE_SCHEMA.md` |
+| `npm run docs:schema` | Regenerate `docs/DATABASE_SCHEMA.md` |
 
 During development a component gallery is available at `/gallery` (not in production builds).
 
@@ -143,8 +143,9 @@ During development a component gallery is available at `/gallery` (not in produc
 
 ## Documentation
 
-- [APPWRITE_SETUP.md](APPWRITE_SETUP.md): backend setup details and permissions
-- [ARCHITECTURE.md](ARCHITECTURE.md): layers, folders, security model
-- [DATABASE_SCHEMA.md](DATABASE_SCHEMA.md): generated tables and columns
+- [docs/APPWRITE_SETUP.md](docs/APPWRITE_SETUP.md): backend setup details and permissions
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): layers, folders, security model
+- [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md): generated tables and columns
 - [CONTRIBUTING.md](CONTRIBUTING.md): workflow, branches, member ownership
-- [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md): phases and status
+- [docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md): phases and status
+- [docs/QA_TEST_REPORT.md](docs/QA_TEST_REPORT.md): archived QA audit report
