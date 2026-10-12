@@ -1,11 +1,11 @@
 {
-  "checkedAt": "2026-10-12T08:13:36.438Z",
+  "checkedAt": "2026-10-12T08:26:11.400Z",
   "baseUrl": "http://localhost:8081",
   "checks": [
     {
       "name": "App commit",
       "ok": true,
-      "detail": "Testing @ 96e9dab, tracked files modified: 0"
+      "detail": "Testing @ a21f0fe, tracked files modified: 0"
     },
     {
       "name": "Expo / React Native",
@@ -28,8 +28,8 @@
     },
     {
       "name": "Web preview reachable",
-      "ok": true,
-      "detail": "http://localhost:8081 -> HTTP 200"
+      "ok": false,
+      "detail": "http://localhost:8081 not reachable (start it: npx expo start --web --port 8081)"
     },
     {
       "name": "Playwright installed (testing/usability/automation)",
@@ -64,7 +64,7 @@
   ],
   "app": {
     "branch": "Testing",
-    "commit": "96e9dab",
+    "commit": "a21f0fe",
     "dirtyTrackedFiles": 0,
     "expo": "~57.0.26",
     "reactNative": "0.86.3"
