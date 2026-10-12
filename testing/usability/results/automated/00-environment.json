@@ -1,0 +1,97 @@
+{
+  "checkedAt": "2026-10-12T08:13:36.438Z",
+  "baseUrl": "http://localhost:8081",
+  "checks": [
+    {
+      "name": "App commit",
+      "ok": true,
+      "detail": "Testing @ 96e9dab, tracked files modified: 0"
+    },
+    {
+      "name": "Expo / React Native",
+      "ok": true,
+      "detail": "~57.0.26 / 0.86.3"
+    },
+    {
+      "name": "Node",
+      "ok": true,
+      "detail": "v24.19.0"
+    },
+    {
+      "name": ".env Appwrite keys present",
+      "ok": true,
+      "detail": "all five set (values not shown)"
+    },
+    {
+      "name": ".env.provision.local is git-ignored (and is NOT used by this package)",
+      "ok": true
+    },
+    {
+      "name": "Web preview reachable",
+      "ok": true,
+      "detail": "http://localhost:8081 -> HTTP 200"
+    },
+    {
+      "name": "Playwright installed (testing/usability/automation)",
+      "ok": true,
+      "detail": "1.64.0"
+    },
+    {
+      "name": "Chromium available",
+      "ok": true,
+      "detail": "chromium-1234, chromium_headless_shell-1234"
+    },
+    {
+      "name": "Android SDK adb found",
+      "ok": true,
+      "detail": "platform-tools present"
+    },
+    {
+      "name": "Android emulator image (AVD)",
+      "ok": true,
+      "detail": "Medium_Phone"
+    },
+    {
+      "name": "Android device/emulator connected (needed for the PDF-required Android session)",
+      "ok": false,
+      "detail": "none connected"
+    },
+    {
+      "name": "QA_* credentials set in environment (cross-account E2E runs only if all three)",
+      "ok": false,
+      "detail": "{\"REQUESTER\":false,\"DONOR\":false,\"REVIEWER\":false}"
+    }
+  ],
+  "app": {
+    "branch": "Testing",
+    "commit": "96e9dab",
+    "dirtyTrackedFiles": 0,
+    "expo": "~57.0.26",
+    "reactNative": "0.86.3"
+  },
+  "host": {
+    "os": "Windows_NT 10.0.26300",
+    "node": "v24.19.0"
+  },
+  "apiKeyFileIgnoredByGit": true,
+  "playwright": {
+    "version": "1.64.0",
+    "browsers": [
+      "chromium-1234",
+      "chromium_headless_shell-1234"
+    ]
+  },
+  "android": {
+    "sdkFound": true,
+    "adb": true,
+    "avds": [
+      "Medium_Phone"
+    ],
+    "devices": []
+  },
+  "qaCredentialsSet": {
+    "REQUESTER": false,
+    "DONOR": false,
+    "REVIEWER": false
+  }
+}

@@ -1,0 +1,21 @@
+
+> donorlink@1.0.0 test
+> jest --ci --json --outputFile=testing/usability/results/automated/03-jest-report.json
+
+PASS src/domain/__tests__/matching.test.ts
+PASS src/domain/__tests__/workflow.test.ts
+PASS src/domain/__tests__/validation.test.ts
+PASS appwrite/functions/api/__tests__/entrypoint.test.js
+PASS appwrite/functions/api/__tests__/accountDeletion.test.js
+PASS appwrite/functions/api/__tests__/concurrencyAndHardening.test.js
+PASS appwrite/functions/api/__tests__/selfMatch.test.js
+PASS appwrite/functions/api/__tests__/requestLifecycle.test.js
+PASS appwrite/functions/api/__tests__/securityAndOrganizations.test.js
+
+Test Suites: 9 passed, 9 total
+Tests:       122 passed, 122 total
+Snapshots:   0 total
+Time:        2.951 s, estimated 3 s
+Ran all test suites.
+Test results written to: testing\usability\results\automated\03-jest-report.json
+exit=0

@@ -1,0 +1,6 @@
+  -  16 tests\qa-e2e.pw.ts:164:7 › TC-E2E-U: requester -> reviewer -> donor (maps to T1-T6) › TC-E2E-U06 [T5] donor finds the alert and accepts
+  -  17 tests\qa-e2e.pw.ts:185:7 › TC-E2E-U: requester -> reviewer -> donor (maps to T1-T6) › TC-E2E-U07 requester sees the response count update (1 of 2 accepted)
+  -  18 tests\qa-e2e.pw.ts:192:7 › TC-E2E-U: requester -> reviewer -> donor (maps to T1-T6) › TC-E2E-U08 [T6] donor opens History (Requests and Donations)
+
+  8 skipped
+  10 passed (19.5s)

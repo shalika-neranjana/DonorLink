@@ -1,0 +1,15 @@
+{
+  "name": "donorlink-usability-automation",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Isolated Playwright suite for the DonorLink usability-testing package (does not touch the app's package.json).",
+  "scripts": {
+    "test:public": "playwright test public-screens.pw",
+    "test:e2e": "playwright test qa-e2e.pw",
+    "test": "playwright test",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0"
+  }
+}

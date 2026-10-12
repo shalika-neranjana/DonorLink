@@ -1,0 +1,1152 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\playwright.config.ts",
+    "rootDir": "C:/Users/shali/Documents/Projects/reactnative/DonorLink/testing/usability/automation/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/shali/Documents/Projects/reactnative/DonorLink/testing/usability/automation/test-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/shali/Documents/Projects/reactnative/DonorLink/testing/usability/automation/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.pw.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\test-output",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests",
+        "snapshotDir": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.pw.ts",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://localhost:8081",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "screenshot": "only-on-failure",
+          "trace": "off",
+          "actionTimeout": 10000,
+          "navigationTimeout": 45000,
+          "launchOptions": {
+            "executablePath": "C:\\Users\\shali\\AppData\\Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe"
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../results/automated/04-playwright-report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx expo start --web --port 8081",
+      "cwd": "../../..",
+      "url": "http://localhost:8081",
+      "reuseExistingServer": true,
+      "timeout": 180000
+    }
+  },
+  "suites": [
+    {
+      "title": "public-screens.pw.ts",
+      "file": "public-screens.pw.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "signed-out screens (no credentials)",
+          "file": "public-screens.pw.ts",
+          "line": 19,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-PUB-01 Welcome screen renders for a signed-out visitor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1781,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:19.969Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-0488e31bb0e4a862c7a1",
+              "file": "public-screens.pw.ts",
+              "line": 34,
+              "column": 7
+            },
+            {
+              "title": "TC-PUB-02 Login screen is reachable from Welcome and shows both fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2373,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:22.090Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-3462b72757000c343dd1",
+              "file": "public-screens.pw.ts",
+              "line": 43,
+              "column": 7
+            },
+            {
+              "title": "TC-PUB-03 Empty login is blocked client-side with field errors and no network write",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1800,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:24.488Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-f301d2915822d4fca511",
+              "file": "public-screens.pw.ts",
+              "line": 54,
+              "column": 7
+            },
+            {
+              "title": "TC-PUB-04 Malformed email is rejected before any request is sent",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1814,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:26.315Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-cbd357681360c129ef0a",
+              "file": "public-screens.pw.ts",
+              "line": 62,
+              "column": 7
+            },
+            {
+              "title": "TC-PUB-05 Register screen is reachable from Login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1862,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:28.156Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-57ecb80b322507f1ac88",
+              "file": "public-screens.pw.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "TC-PUB-06 Forgot-password screen is reachable from Login",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1749,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:30.030Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-f8f5c398befb4602b143",
+              "file": "public-screens.pw.ts",
+              "line": 82,
+              "column": 7
+            },
+            {
+              "title": "TC-PUB-07 Signed-out deep link /requests/create does not expose app content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1714,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:31.797Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-f0951156c0c4f0ba9b7e",
+              "file": "public-screens.pw.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "TC-PUB-07 Signed-out deep link /donor/availability does not expose app content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1699,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:33.548Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-59f95bea3d1a14e8b980",
+              "file": "public-screens.pw.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "TC-PUB-07 Signed-out deep link /history does not expose app content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1652,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:35.274Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-66ccfcbcee22cc5ea366",
+              "file": "public-screens.pw.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "TC-PUB-07 Signed-out deep link /notifications does not expose app content",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "console-errors",
+                      "description": "Failed to load resource: the server responded with a status of 401 ()"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1692,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:36.953Z",
+                      "annotations": [
+                        {
+                          "type": "console-errors",
+                          "description": "Failed to load resource: the server responded with a status of 401 ()"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "afa1c28ff6fe855b45b6-1ea45ad8253ec1a403a6",
+              "file": "public-screens.pw.ts",
+              "line": 91,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "qa-e2e.pw.ts",
+      "file": "qa-e2e.pw.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "TC-E2E-U: requester -> reviewer -> donor (maps to T1-T6)",
+          "file": "qa-e2e.pw.ts",
+          "line": 58,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-E2E-U01 [T1] requester signs in and reaches Home",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-cc84950c0575a431b6d3",
+              "file": "qa-e2e.pw.ts",
+              "line": 84,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U02 [T2] requester creates a 2-unit O+ request for a Colombo hospital",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-6bed553a522b137d7e3d",
+              "file": "qa-e2e.pw.ts",
+              "line": 89,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U03 [T3] requester sees \"Awaiting verification\" and 0 of 2 accepted",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-514addd41cbed663c1fb",
+              "file": "qa-e2e.pw.ts",
+              "line": 131,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U04 reviewer verifies the request through the existing UI",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-dbfbde9b9052e7a62ff0",
+              "file": "qa-e2e.pw.ts",
+              "line": 139,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U05 [T4] donor sets availability (quick option; web has no time picker)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-12952ccc5470731753c0",
+              "file": "qa-e2e.pw.ts",
+              "line": 149,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U06 [T5] donor finds the alert and accepts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-847d4b5818a4472ee708",
+              "file": "qa-e2e.pw.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U07 requester sees the response count update (1 of 2 accepted)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-e1e72f5bfa1195fbf757",
+              "file": "qa-e2e.pw.ts",
+              "line": 185,
+              "column": 7
+            },
+            {
+              "title": "TC-E2E-U08 [T6] donor opens History (Requests and Donations)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                      "location": {
+                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                        "line": 56,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "",
+                  "projectName": "",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T08:01:38.674Z",
+                      "annotations": [
+                        {
+                          "type": "serial",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 0,
+                            "column": 0
+                          }
+                        },
+                        {
+                          "type": "skip",
+                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
+                          "location": {
+                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
+                            "line": 56,
+                            "column": 6
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "c5fbfdd163c49fab71b8-bb2e23d9bd5b0ee01dea",
+              "file": "qa-e2e.pw.ts",
+              "line": 192,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T08:01:19.440Z",
+    "duration": 19470.993000000002,
+    "expected": 10,
+    "skipped": 8,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,7 @@
+automation/node_modules/
+automation/test-output/
+# raw participant data never committed
+results/private/
+*.local
+*.local.*
+.env*
