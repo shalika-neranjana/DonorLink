@@ -1,6 +1,6 @@
 # Task success criteria and measurement (facilitator and note-taker)
 
-Screen names, labels and states below were read from the source code at commit `96e9dab`. **None of this has been observed with a participant.** If the app differs on the day, record the real wording and keep the intent of the PDF criterion.
+Screen names, labels and states below were read from the source code at commit `fd7f81b`. **None of this has been observed with a participant.** If the app differs on the day, record the real wording and keep the intent of the PDF criterion.
 
 ## Outcome codes (all tasks)
 

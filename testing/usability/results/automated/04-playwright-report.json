@@ -3,7 +3,8 @@
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
       "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\node_modules\\@playwright\\test\\cli.js",
-      "test"
+      "test",
+      "public-screens.pw"
     ],
     "configFile": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\playwright.config.ts",
     "rootDir": "C:/Users/shali/Documents/Projects/reactnative/DonorLink/testing/usability/automation/tests",
@@ -65,7 +66,7 @@
           "actionTimeout": 10000,
           "navigationTimeout": 45000,
           "launchOptions": {
-            "executablePath": "C:\\Users\\shali\\AppData\\Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe"
+            "executablePath": "C:\\Users\\shali\\AppData\\Local\\ms-playwright\\chromium-1234\\chrome-win64\\chrome.exe"
           }
         },
         "dependencies": [],
@@ -139,12 +140,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1781,
+                      "duration": 3874,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:19.969Z",
+                      "startTime": "2026-10-12T08:44:58.670Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -183,12 +184,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2373,
+                      "duration": 1722,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:22.090Z",
+                      "startTime": "2026-10-12T08:45:03.379Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -227,12 +228,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1800,
+                      "duration": 1696,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:24.488Z",
+                      "startTime": "2026-10-12T08:45:05.120Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -271,12 +272,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1814,
+                      "duration": 1707,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:26.315Z",
+                      "startTime": "2026-10-12T08:45:06.828Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -315,12 +316,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1862,
+                      "duration": 1680,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:28.156Z",
+                      "startTime": "2026-10-12T08:45:08.551Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -359,12 +360,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1749,
+                      "duration": 1736,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:30.030Z",
+                      "startTime": "2026-10-12T08:45:10.246Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -403,12 +404,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1714,
+                      "duration": 1444,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:31.797Z",
+                      "startTime": "2026-10-12T08:45:12.002Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -447,12 +448,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1699,
+                      "duration": 1652,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:33.548Z",
+                      "startTime": "2026-10-12T08:45:13.475Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -491,12 +492,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1652,
+                      "duration": 1531,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:35.274Z",
+                      "startTime": "2026-10-12T08:45:15.149Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -535,12 +536,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1692,
+                      "duration": 1467,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-12T08:01:36.953Z",
+                      "startTime": "2026-10-12T08:45:16.695Z",
                       "annotations": [
                         {
                           "type": "console-errors",
@@ -561,591 +562,14 @@
           ]
         }
       ]
-    },
-    {
-      "title": "qa-e2e.pw.ts",
-      "file": "qa-e2e.pw.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "TC-E2E-U: requester -> reviewer -> donor (maps to T1-T6)",
-          "file": "qa-e2e.pw.ts",
-          "line": 58,
-          "column": 6,
-          "specs": [
-            {
-              "title": "TC-E2E-U01 [T1] requester signs in and reaches Home",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-cc84950c0575a431b6d3",
-              "file": "qa-e2e.pw.ts",
-              "line": 84,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U02 [T2] requester creates a 2-unit O+ request for a Colombo hospital",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-6bed553a522b137d7e3d",
-              "file": "qa-e2e.pw.ts",
-              "line": 89,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U03 [T3] requester sees \"Awaiting verification\" and 0 of 2 accepted",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-514addd41cbed663c1fb",
-              "file": "qa-e2e.pw.ts",
-              "line": 131,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U04 reviewer verifies the request through the existing UI",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-dbfbde9b9052e7a62ff0",
-              "file": "qa-e2e.pw.ts",
-              "line": 139,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U05 [T4] donor sets availability (quick option; web has no time picker)",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-12952ccc5470731753c0",
-              "file": "qa-e2e.pw.ts",
-              "line": 149,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U06 [T5] donor finds the alert and accepts",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-847d4b5818a4472ee708",
-              "file": "qa-e2e.pw.ts",
-              "line": 164,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U07 requester sees the response count update (1 of 2 accepted)",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-e1e72f5bfa1195fbf757",
-              "file": "qa-e2e.pw.ts",
-              "line": 185,
-              "column": 7
-            },
-            {
-              "title": "TC-E2E-U08 [T6] donor opens History (Requests and Donations)",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 60000,
-                  "annotations": [
-                    {
-                      "type": "serial",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 0,
-                        "column": 0
-                      }
-                    },
-                    {
-                      "type": "skip",
-                      "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                      "location": {
-                        "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                        "line": 56,
-                        "column": 6
-                      }
-                    }
-                  ],
-                  "expectedStatus": "skipped",
-                  "projectId": "",
-                  "projectName": "",
-                  "results": [
-                    {
-                      "workerIndex": -1,
-                      "parallelIndex": -1,
-                      "status": "skipped",
-                      "duration": 0,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-10-12T08:01:38.674Z",
-                      "annotations": [
-                        {
-                          "type": "serial",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 0,
-                            "column": 0
-                          }
-                        },
-                        {
-                          "type": "skip",
-                          "description": "QA_* credentials not set: cross-account E2E skipped (see file header).",
-                          "location": {
-                            "file": "C:\\Users\\shali\\Documents\\Projects\\reactnative\\DonorLink\\testing\\usability\\automation\\tests\\qa-e2e.pw.ts",
-                            "line": 56,
-                            "column": 6
-                          }
-                        }
-                      ],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "skipped"
-                }
-              ],
-              "id": "c5fbfdd163c49fab71b8-bb2e23d9bd5b0ee01dea",
-              "file": "qa-e2e.pw.ts",
-              "line": 192,
-              "column": 7
-            }
-          ]
-        }
-      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-12T08:01:19.440Z",
-    "duration": 19470.993000000002,
+    "startTime": "2026-10-12T08:44:21.858Z",
+    "duration": 57087.509999999995,
     "expected": 10,
-    "skipped": 8,
+    "skipped": 0,
     "unexpected": 0,
     "flaky": 0
   }

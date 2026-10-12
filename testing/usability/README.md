@@ -2,7 +2,7 @@
 
 Implements Section 9 *Usability Testing of the Working Application* of the IT3060 Milestone 03 report. **Read `final-report.md` first**: it states what was executed, what passed, and what still needs people.
 
-> **Status:** materials ready; credential-free automated checks executed (10/10 pass); app baseline (typecheck, lint, 122 Jest tests) passes; **no participant sessions are recorded in this repository**, and the cross-account walkthrough and native-Android checks have not been run.
+> **Status:** materials ready; credential-free automated checks executed (10/10 pass); app baseline (typecheck, lint, 122 Jest tests) passes. The three workbooks include a **clearly labelled synthetic proxy-evaluation dataset** so their calculations and charts can be demonstrated. **No human participant sessions are recorded in this repository**, and the cross-account walkthrough and native-Android checks have not been run.
 
 ## Contents
 

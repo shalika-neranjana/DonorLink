@@ -1,11 +1,11 @@
 {
-  "checkedAt": "2026-10-12T08:26:11.400Z",
+  "checkedAt": "2026-10-12T08:43:58.545Z",
   "baseUrl": "http://localhost:8081",
   "checks": [
     {
       "name": "App commit",
       "ok": true,
-      "detail": "Testing @ a21f0fe, tracked files modified: 0"
+      "detail": "Testing @ fd7f81b, tracked files modified: 0"
     },
     {
       "name": "Expo / React Native",
@@ -64,7 +64,7 @@
   ],
   "app": {
     "branch": "Testing",
-    "commit": "a21f0fe",
+    "commit": "fd7f81b",
     "dirtyTrackedFiles": 0,
     "expo": "~57.0.26",
     "reactNative": "0.86.3"

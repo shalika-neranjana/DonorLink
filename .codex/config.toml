@@ -1,0 +1,3 @@
+[mcp_servers.use-gluestack-components]
+command = "node"
+args = ['C:\Users\shali\Documents\mcp-servers\mcp\index.js']

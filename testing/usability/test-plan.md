@@ -51,7 +51,7 @@ The report states the sessions "have been completed" and points to a Google Driv
 | D3 | Completion rate in the PDF is *unaided / attempting*. A general definition would be *completed / attempted*. | Both shown: unaided rate (PDF) and assisted rate separately; total completion also given. Application-blocked attempts are never counted as completed. |
 | D4 | Severity: PDF uses Nielsen 0-4. | 0-4 is stored; the sheet also labels each level Low / Medium / High. |
 | D5 | Section 9 says the sessions were conducted; Table 16 has no numbers; Appendix D says device tests were not run; section 8.2 says no Android device was available. | Treated as unverified. Nothing is copied from the shared folder. |
-| D6 | The report cites 21 suites / 384 tests / `.maestro` flows on branch `development`; this checkout (`Testing`, commit `96e9dab`) has 9 Jest suites / 122 tests and no `.maestro` folder. | Actual counts reported. The report's figures cannot be reproduced from this branch. |
+| D6 | The report cites 21 suites / 384 tests / `.maestro` flows on branch `development`; this checkout (`Testing`, commit `fd7f81b`) has 9 Jest suites / 122 tests and no `.maestro` folder. | Actual counts reported. The report's figures cannot be reproduced from this branch. |
 | D7 | T3 says "how many donors have **responded**", but the app shows "N of M donors **accepted**" plus Contacted / Accepted / Waiting / Declined. | Accepted answer defined in `task-success-criteria.md`; logged as CAND-03. |
 | D8 | T4 says "until **6 pm**". The app rejects an end time that is not in the future, and the web preview has no clock-time picker. | Sessions must start before 18:00 (or the card time is changed and recorded); T4 needs Android. Logged as CAND-01, CAND-02. |
 | D9 | C.3 says prepare "one verified pending request (for T3)". A request cannot be both verified and pending verification. | Interpreted as: the facilitator verifies the participant's T2 request (reviewer account) before T3 and records the true state as ground truth. |
@@ -59,7 +59,7 @@ The report states the sessions "have been completed" and points to a Google Driv
 ## 4. Application state (read from the repository)
 
 * **Stack:** Expo SDK `~57.0.26`, React Native `0.86.3`, React 19.2.3, Expo Router (`src/app`), NativeWind 5 rc, gluestack-ui. Backend: **Appwrite Cloud** (auth, TablesDB, storage, realtime, one server Function `donorlink-api`). No `ios/` or `android/` folder (CNG).
-* **Branch / commit:** `Testing` @ `96e9dab`, working tree clean at start.
+* **Branch / commit:** `Testing` @ `fd7f81b`, tracked files clean at validation start.
 * **Screens used by the tasks:** `(auth)/login`, `(app)/(tabs)/index` (Home), `requests/create` → `requests/review` → `requests/matching`, `requests/[id]` (RequestDetailsScreen), `requests/tracking`, `donor/availability`, `donor/incoming/[id]`, `(tabs)/notifications` (Alerts), `history/index`.
 * **Request lifecycle:** submitted → `pending_verification` ("Awaiting verification") → verified → matching → donors_contacted → partially_fulfilled → fulfilled → completed (also cancelled / rejected / expired). A request must be verified before donors are contacted.
 * **Roles:** Appwrite labels (`admin`, `organization`) set only by the server. A single account can be both requester and donor, but matching never offers a request to its own requester.
@@ -84,10 +84,10 @@ Not done on purpose: no account creation, no sign-in to the live backend by the 
 | Environment | Use | Limits |
 |---|---|---|
 | **Android phone running the DonorLink build** | **Required by the PDF** for participant sessions | No build was available here. The report's EAS APK (`e6142dd1`, commit `1de36d6`) predates the final commit and expires 21 Oct 2026. Rebuild: `npx eas-cli build -p android --profile preview` (needs the owner's EAS login). |
-| Android emulator | Dry runs only | An AVD `Medium_Phone` exists on this machine; `adb` is not on `PATH`; needs a development build. |
+| Android emulator | Dry runs only | An AVD `Medium_Phone` and `adb` are available on this machine; it still needs a development build. |
 | **Expo web preview** (`expo-web`, 390 × 844, Chromium) | Used for the automated functional checks | No keychain, no native date/time dialogs, no Android back button, no TalkBack, no touch gestures. `Pick date & time` is hidden on web, so T4 as worded cannot be completed there. |
 
-Recorded for the automated run: Windows 11, Node v24.19.0, Playwright 1.64.0 driving the pre-installed Chromium 151.0.7922.34, viewport 390 × 844, app at commit `96e9dab`, Appwrite Cloud via the existing `.env` (values not recorded). Every session record must note device, OS, build/commit, and environment (`Sessions` sheet).
+Recorded for the automated run: Windows 11, Node v24.19.0, Playwright 1.64.0 driving the pre-installed Chromium 151.0.7922.34, viewport 390 × 844, app at commit `fd7f81b`, Appwrite Cloud via the existing `.env` (values not recorded). Every session record must note device, OS, build/commit, and environment (`Sessions` sheet).
 
 ## 7. Participants
 

@@ -1,11 +1,12 @@
 # DonorLink usability testing: final report of this package
 
-Date prepared: 12 October 2026. App under test: branch `Testing`, commit `96e9dab`, Expo SDK ~57.0.26, React Native 0.86.3.
+Date prepared: 12 October 2026. Validated on branch `Testing`, commit `fd7f81b`, Expo SDK ~57.0.26, React Native 0.86.3.
 
 ## 1. Executive summary
 
 * A complete, repeatable usability-testing package for the six PDF tasks (T1-T6) has been prepared: plan, consent, facilitator protocol, participant cards, observable success criteria, SEQ/SUS/debrief instruments, three Excel workbooks (observation, results/analysis, issue log), synthetic-data rules and an isolated Playwright suite.
 * **The participant-based usability study is not part of this package's results.** No real participant data exists in the repository, and no participants were invented. The PDF states that sessions were completed and points to a Google Drive folder that this package could not open; its Table 16 still says "See folder". The workbooks are ready to take that data.
+* A separate **synthetic proxy evaluation** now populates the workbooks to demonstrate their calculation and reporting workflow. Its five proxy personas and all findings are explicitly labelled synthetic; they are not evidence of human usability and must be replaced or validated by participant sessions.
 * **Executed and passing:** the app's typecheck, lint and Jest suite (9 suites, 122 tests), and 10 credential-free Playwright checks of the signed-out screens on the Expo web preview.
 * **Not executed:** the cross-account walkthrough (needs QA passwords typed by the project owner against live Appwrite Cloud) and anything on a native Android phone (no build or device available).
 * **Findings:** no usability findings have been observed. Six *candidate* issues were found by reading the code and are logged as unverified (§13). Nine points in the PDF itself need a decision (§3 of `test-plan.md`), including that Section 9.3 says five tasks while Table 15 lists six.
@@ -23,10 +24,10 @@ Nineteen mandatory requirements (R1-R19) and three additions (A1-A3) are traced 
 
 | Item | Value |
 |---|---|
-| Code | `Testing` @ `96e9dab`; tracked files unmodified before and after |
+| Code | `Testing` @ `fd7f81b`; tracked files unmodified during validation |
 | Stack | Expo Router app (`src/app`), Appwrite Cloud backend, server Function `donorlink-api` |
 | Automated run | Windows 11, Node v24.19.0, Playwright 1.64.0 on pre-installed Chromium 151.0.7922.34, viewport 390 × 844, Expo web preview `http://localhost:8081`, backend from the existing `.env` (values not recorded) |
-| Android | SDK and AVD `Medium_Phone` present; `adb` not on PATH; no device connected; no APK or development build; **not used** |
+| Android | SDK, `adb`, and AVD `Medium_Phone` present; no device connected and no APK or development build; **not used** |
 | Environment record | `results/automated/00-environment.json` (no secrets) |
 
 Web preview is **not** equivalent to Android: no keychain, native date/time dialogs, Android back button, TalkBack or touch gestures, and the `Pick date & time` chip is hidden on web (see CAND-01).
@@ -106,7 +107,11 @@ All ten images are listed in `results/screenshot-register.csv`.
 
 ## 11. Participant testing results
 
-**None recorded here.** The workbooks are blank; Table 16 cannot be filled from this repository. If sessions were run as the PDF states, enter their recording sheets and SUS forms into `observation-sheet.xlsx` and copy to `results-analysis.xlsx`. The PDF's own claim of completed sessions was not verified.
+**No human participant results are recorded here.** The workbooks contain only the separately labelled proxy demonstration data below. If sessions were run as the PDF states, enter their recording sheets and SUS forms into `observation-sheet.xlsx` and copy to `results-analysis.xlsx`. The PDF's own claim of completed sessions was not verified.
+
+### Synthetic proxy evaluation (demonstration only)
+
+Five simulated proxy personas completed all six scenarios using the source-informed web walkthrough. This is a test-project dataset, not a study with people. It uses the same outcomes, timing, SEQ and SUS fields so that the formulas, charts and Table 16 have visible values. The strongest proxy signals are T4 exact-time availability (0/5 unaided, one abandonment), T6 history discovery (2/5 unaided), and T3 response-count wording (3/5 unaided). The issue log records these as `WA-P01` through `WA-P04`, each marked **"Proxy finding — validate with people"**. Do not report any of these counts as participant results.
 
 ## 12. Task-level completion, timing, SEQ and SUS analysis
 
