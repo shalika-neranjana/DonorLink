@@ -72,6 +72,12 @@
         "projectId": "e5020e6e-75e9-4d29-9dc4-7b4c8d8ef65e"
       }
     },
-    "owner": "shalika-neranjana"
+    "owner": "shalika-neranjana",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e5020e6e-75e9-4d29-9dc4-7b4c8d8ef65e"
+    }
   }
 }
