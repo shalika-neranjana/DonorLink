@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 import { isAdmin, isOrganizationMember, organizationIdsFromLabels } from '@/domain';
+import { callApi } from '@/lib/appwrite/api';
 import { authApi, type AuthUser } from '@/lib/appwrite/auth';
 import { isAppwriteConfigured } from '@/lib/appwrite/config';
 import { AppError, toAppError } from '@/lib/appwrite/errors';
@@ -29,6 +30,8 @@ export interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (input: { name: string; email: string; password: string }) => Promise<void>;
   signOut: () => Promise<void>;
+  /** Permanently deletes the account and its personal data, then signs out locally. */
+  deleteAccount: () => Promise<void>;
   refreshUser: (known?: AuthUser) => Promise<AuthUser | null>;
   refreshProfile: () => Promise<Profile | null>;
   refreshDonorProfile: () => Promise<DonorProfile | null>;
@@ -101,6 +104,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
+    await authApi.logout();
+    resetLocal();
+  }, [resetLocal]);
+
+  const deleteAccount = useCallback(async () => {
+    await callApi('account.delete', { confirm: true });
+    // The server session died with the account; this only clears local state.
     await authApi.logout();
     resetLocal();
   }, [resetLocal]);
@@ -183,6 +193,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signOut,
+      deleteAccount,
       refreshUser,
       refreshProfile,
       refreshDonorProfile,
@@ -191,7 +202,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       dismissEmailPrompt: () => setEmailPromptDismissed(true),
       retryBoot,
     }),
-    [status, user, profile, donorProfile, bootError, labels, emailPromptDismissed, signIn, signUp, signOut, refreshUser, refreshProfile, refreshDonorProfile, retryBoot],
+    [status, user, profile, donorProfile, bootError, labels, emailPromptDismissed, signIn, signUp, signOut, deleteAccount, refreshUser, refreshProfile, refreshDonorProfile, retryBoot],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

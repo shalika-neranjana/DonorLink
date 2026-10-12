@@ -244,6 +244,37 @@ describe('notifications and support', () => {
     expect(w.rows('notifications').some((n) => n.userId === 'req1' && n.type === 'support_reply')).toBe(true);
   });
 
+  it('lets owners edit an unanswered ticket, then locks it', async () => {
+    const { w } = await createScenario();
+    const { ticket } = await w.ok('req1', 'support.create', { category: 'account', subject: 'Phone number', message: 'I cannot update my phone number.' });
+    const bad = await w.call('req1', 'support.update', { ticketId: ticket.$id, category: 'account', subject: 'Phone', message: 'short' });
+    expect(bad.status).toBe(400);
+    const edited = await w.ok('req1', 'support.update', { ticketId: ticket.$id, category: 'verification', subject: ' Phone number ', message: 'I cannot update my phone number in settings.', status: 'resolved', reply: 'forged' });
+    expect(edited.ticket).toMatchObject({ category: 'verification', subject: 'Phone number', status: 'open' });
+    expect(edited.ticket.reply).toBeUndefined();
+    // Another user cannot see or edit it.
+    expect((await w.call('stranger', 'support.update', { ticketId: ticket.$id, category: 'other', subject: 'Hi', message: 'Hijacking this ticket.' })).status).toBe(404);
+    await w.ok('admin1', 'support.reply', { ticketId: ticket.$id, reply: 'Fixed, please retry.' });
+    const locked = await w.call('req1', 'support.update', { ticketId: ticket.$id, category: 'account', subject: 'Phone', message: 'Trying to edit after the reply.' });
+    expect(locked.status).toBe(409);
+    expect(locked.body.error.code).toBe('ticket_locked');
+  });
+
+  it('lets owners and admins delete tickets, nobody else', async () => {
+    const { w } = await createScenario();
+    const first = (await w.ok('req1', 'support.create', { category: 'other', subject: 'First', message: 'The first ticket body.' })).ticket;
+    const second = (await w.ok('req1', 'support.create', { category: 'other', subject: 'Second', message: 'The second ticket body.' })).ticket;
+    expect((await w.call('stranger', 'support.delete', { ticketId: first.$id })).status).toBe(404);
+    expect((await w.call('req1', 'support.delete', {})).status).toBe(400);
+    await w.ok('req1', 'support.delete', { ticketId: first.$id });
+    expect(await w.store.get('support_tickets', first.$id)).toBeNull();
+    // Owners may withdraw even an answered ticket; admins may remove any.
+    await w.ok('admin1', 'support.reply', { ticketId: second.$id, reply: 'Done.' });
+    await w.ok('admin1', 'support.delete', { ticketId: second.$id });
+    expect(w.rows('support_tickets')).toHaveLength(0);
+    expect(w.rows('audit_logs').filter((a) => a.action === 'support.deleted')).toHaveLength(2);
+  });
+
   it('computes admin analytics', async () => {
     const { w, baseRequest } = await createScenario();
     await w.ok('req1', 'request.create', { request: baseRequest, clientId: 'an1' });

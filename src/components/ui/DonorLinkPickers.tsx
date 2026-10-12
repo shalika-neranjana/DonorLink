@@ -159,7 +159,7 @@ export function DonorLinkChip({ label, selected, onPress, icon }: { label: strin
       accessibilityLabel={label}
       className={cn(
         'min-h-[40px] flex-row items-center gap-1.5 rounded-full border px-3.5',
-        selected ? 'border-primary bg-primary-soft' : 'border-border-strong bg-surface active:bg-subtle',
+        selected ? 'border-primary bg-primary-soft active:bg-primary-soft' : 'border-border-strong bg-surface active:bg-subtle',
       )}
     >
       {selected ? <DonorLinkIcon name="checkmark" size={16} color="primary" /> : icon ? <DonorLinkIcon name={icon} size={16} color="fgSecondary" /> : null}

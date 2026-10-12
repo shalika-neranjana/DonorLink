@@ -1,4 +1,4 @@
-import { canCancelRequest, canTransitionDonation, canTransitionRequest, canTransitionResponse, assertRequestTransition, InvalidTransitionError, REQUEST_TRANSITIONS } from '../transitions';
+import { canCancelRequest, canEditTicket, canTransitionDonation, canTransitionRequest, canTransitionResponse, assertRequestTransition, InvalidTransitionError, REQUEST_TRANSITIONS } from '../transitions';
 import { NOTIFICATION_TYPES, REQUEST_STATUSES, TERMINAL_REQUEST_STATUSES } from '../statuses';
 import { buildTimeline, parseStatusHistory } from '../tracking';
 import {
@@ -199,5 +199,15 @@ describe('notifications', () => {
     expect(n.route).toBe('/donor/incoming/req1');
     expect(n.title).toContain('Critical');
     expect(n.body).toContain('2.4 km');
+  });
+});
+
+describe('support ticket editing', () => {
+  it('only lets an unanswered open ticket be edited', () => {
+    expect(canEditTicket({ status: 'open' })).toBe(true);
+    expect(canEditTicket({ status: 'open', reply: null })).toBe(true);
+    expect(canEditTicket({ status: 'open', reply: 'On it.' })).toBe(false);
+    expect(canEditTicket({ status: 'in_progress' })).toBe(false);
+    expect(canEditTicket({ status: 'resolved', reply: 'Done.' })).toBe(false);
   });
 });

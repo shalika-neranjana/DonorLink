@@ -48,3 +48,4 @@ appwrite/.build/
 appwrite/functions/api/src/domain/
 appwrite/functions/api/node_modules/
 .env.provision.local
+*.local

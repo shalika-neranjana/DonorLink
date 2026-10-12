@@ -1,6 +1,6 @@
 # Implementation plan and status
 
-Derived from `DONORLINK_MASTER_CLAUDE_COWORK_PROMPT.md`. Status is factual as of this commit.
+Status is factual as of this commit.
 
 ## Phase 0: audit (done)
 
@@ -19,7 +19,7 @@ Added: NativeWind v5, Tailwind v4, gluestack-ui v5 core/utils, Expo modules (sec
 | 5 | Donor: availability, incoming accept/decline, coordination, history, donor details | Done |
 | 6 | Organization: overview, verify queue, requests, donors, inventory, profile/team | Done |
 | 7 | Platform/Admin: notifications, verification center, admin console, audit, analytics, support | Done |
-| 8 | Realtime and backend hardening: function, permissions, transitions, notification logic | Done in code and tests; needs provisioning against the real project (see APPWRITE_SETUP.md) |
+| 8 | Realtime and backend hardening: function, permissions, transitions, notification logic | Done in code and tests; needs provisioning against the real project (see [APPWRITE_SETUP.md](APPWRITE_SETUP.md)) |
 | 9 | UX polish: skeletons, empty/error states, animations, accessibility pass | Done for implemented screens (see below) |
 | 10 | Testing and audit | Automated suites pass; end-to-end on a real device/backend pending provisioning |
 
