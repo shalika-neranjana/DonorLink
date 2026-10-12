@@ -10,17 +10,18 @@ import { DonorLinkInput } from '@/components/ui/DonorLinkInput';
 import { DonorLinkChip } from '@/components/ui/DonorLinkPickers';
 import { DonorLinkScreen } from '@/components/ui/DonorLinkScreen';
 import { DonorLinkSection } from '@/components/ui/DonorLinkSection';
+import { DonorLinkConfirmDialog } from '@/components/ui/DonorLinkModal';
 import { DonorLinkBanner } from '@/components/ui/DonorLinkStates';
 import { useToast } from '@/components/ui/DonorLinkToast';
 import { DonorLinkText } from '@/components/ui/DonorLinkText';
-import { SUPPORT_CATEGORIES, validateSupportTicket, type SupportCategory } from '@/domain';
+import { SUPPORT_CATEGORIES, canEditTicket, validateSupportTicket, type SupportCategory, type SupportTicketInput } from '@/domain';
 import { useResource } from '@/hooks/useResource';
 import { getErrorMessage } from '@/lib/appwrite/errors';
 import { formatRelativeTime } from '@/lib/format';
+import { SUPPORT_CATEGORY_LABEL, TicketEditorSheet } from '@/components/support/TicketEditorSheet';
 import { useAuth } from '@/providers/AuthProvider';
 import { FAQ, supportService } from '@/services/supportService';
-
-const CATEGORY_LABEL: Record<SupportCategory, string> = { account: 'Account', request: 'A request', donation: 'A donation', verification: 'Verification', other: 'Something else' };
+import type { SupportTicket } from '@/types/entities';
 
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   );
 }
 
-/** Lightweight support: FAQ, a contact form and the status of your tickets. */
+/** Lightweight support: FAQ, a contact form and your tickets (view, edit while unanswered, delete). */
 export default function SupportScreen() {
   const toast = useToast();
   const { user } = useAuth();
@@ -54,6 +55,9 @@ export default function SupportScreen() {
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
+  const [editing, setEditing] = useState<SupportTicket | null>(null);
+  const [deleting, setDeleting] = useState<SupportTicket | null>(null);
+  const [deleteBusy, setDeleteBusy] = useState(false);
 
   async function send() {
     if (sending) return;
@@ -78,6 +82,29 @@ export default function SupportScreen() {
     }
   }
 
+  async function saveEdit(ticketId: string, input: SupportTicketInput) {
+    await supportService.updateTicket(ticketId, input);
+    setEditing(null);
+    toast.success('Message updated');
+    await tickets.reload();
+  }
+
+  async function confirmDelete() {
+    if (!deleting || deleteBusy) return;
+    setDeleteBusy(true);
+    try {
+      await supportService.deleteTicket(deleting.$id);
+      setDeleting(null);
+      toast.success('Message deleted');
+      await tickets.reload();
+    } catch (e) {
+      setDeleting(null);
+      toast.error("We couldn't delete that message", getErrorMessage(e));
+    } finally {
+      setDeleteBusy(false);
+    }
+  }
+
   return (
     <DonorLinkScreen header={{ title: 'Support & FAQ' }}>
       <DonorLinkSection title="Frequently asked">
@@ -97,7 +124,7 @@ export default function SupportScreen() {
             </DonorLinkText>
             <View className="flex-row flex-wrap gap-2">
               {SUPPORT_CATEGORIES.map((c) => (
-                <DonorLinkChip key={c} label={CATEGORY_LABEL[c]} selected={category === c} onPress={() => setCategory(c)} />
+                <DonorLinkChip key={c} label={SUPPORT_CATEGORY_LABEL[c]} selected={category === c} onPress={() => setCategory(c)} />
               ))}
             </View>
           </View>
@@ -128,10 +155,27 @@ export default function SupportScreen() {
                   <DonorLinkText variant="body">{t.reply}</DonorLinkText>
                 </View>
               ) : null}
+              <View className="flex-row gap-2">
+                {canEditTicket(t) ? <DonorLinkButton title="Edit" variant="outline" size="sm" leftIcon="create-outline" onPress={() => setEditing(t)} /> : null}
+                <DonorLinkButton title="Delete" variant="outline" size="sm" leftIcon="trash-outline" onPress={() => setDeleting(t)} />
+              </View>
             </DonorLinkCard>
           ))}
         </DonorLinkSection>
       ) : null}
+
+      <TicketEditorSheet ticket={editing} onClose={() => setEditing(null)} onSave={saveEdit} />
+      <DonorLinkConfirmDialog
+        visible={!!deleting}
+        title="Delete this message?"
+        message="It will be removed from your messages and support will no longer see it. This can't be undone."
+        confirmLabel="Delete message"
+        cancelLabel="Keep it"
+        tone="danger"
+        loading={deleteBusy}
+        onCancel={() => setDeleting(null)}
+        onConfirm={() => void confirmDelete()}
+      />
     </DonorLinkScreen>
   );
 }

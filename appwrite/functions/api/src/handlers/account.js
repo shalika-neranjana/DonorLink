@@ -72,7 +72,7 @@ async function deleteAccount(ctx, payload) {
     }
   }
 
-  // Personal data: profile, donor profile, notifications, verification submissions and their documents.
+  // Personal data: profile, donor profile, notifications, verification submissions and their documents, support tickets.
   const profile = await ctx.store.get('profiles', userId);
   const verifications = await ctx.store.listAll('verifications', [Query.equal('userId', [userId])]);
   for (const verification of verifications) {
@@ -80,6 +80,7 @@ async function deleteAccount(ctx, payload) {
   }
   if (profile && profile.avatarFileId) await removeFile(ctx, profile.avatarFileId);
   await removeRows(ctx, 'verifications', verifications);
+  await removeRows(ctx, 'support_tickets', await ctx.store.listAll('support_tickets', [Query.equal('userId', [userId])]));
   await removeRows(ctx, 'notifications', await ctx.store.listAll('notifications', [Query.equal('userId', [userId])], 2000));
   await removeRows(ctx, 'donor_profiles', await ctx.store.listAll('donor_profiles', [Query.equal('donorId', [userId])]));
   await removeRows(ctx, 'profiles', profile ? [profile] : []);

@@ -1,4 +1,4 @@
-import type { DonationStatus, RequestStatus, ResponseStatus } from './statuses';
+import type { DonationStatus, RequestStatus, ResponseStatus, SupportStatus } from './statuses';
 
 /**
  * Allowed state transitions. The Appwrite Function enforces these on the
@@ -80,4 +80,9 @@ export function assertDonationTransition(from: DonationStatus, to: DonationStatu
 /** True when the requester may still cancel. */
 export function canCancelRequest(status: RequestStatus): boolean {
   return canTransitionRequest(status, 'cancelled');
+}
+
+/** A ticket can be edited by its owner only until support has picked it up or answered it. */
+export function canEditTicket(ticket: { status: SupportStatus; reply?: string | null }): boolean {
+  return ticket.status === 'open' && !ticket.reply;
 }

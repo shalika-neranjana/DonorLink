@@ -9,6 +9,14 @@ export const supportService = {
     return callApi<{ ticket: SupportTicket }>('support.create', input as unknown as Record<string, unknown>);
   },
 
+  updateTicket(ticketId: string, input: SupportTicketInput) {
+    return callApi<{ ticket: SupportTicket }>('support.update', { ticketId, ...input });
+  },
+
+  deleteTicket(ticketId: string) {
+    return callApi<{ deleted: true; ticketId: string }>('support.delete', { ticketId });
+  },
+
   async listMine(userId: string): Promise<SupportTicket[]> {
     const result = await listRows<SupportTicket>(TABLES.supportTickets, [
       Query.equal('userId', [userId]),

@@ -50,6 +50,8 @@ const actions = {
   'admin.updateSettings': admin.updateSettings,
 
   'support.create': platform.createTicket,
+  'support.update': platform.updateTicket,
+  'support.delete': platform.deleteTicket,
   'support.reply': platform.replyTicket,
 
   'notifications.markRead': platform.markRead,

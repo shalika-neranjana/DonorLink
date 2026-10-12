@@ -22,8 +22,11 @@ describe('account.delete', () => {
     await w.ok('req1', 'request.create', { request: baseRequest, clientId: 'reqA' });
     await w.ok('admin1', 'request.verify', { requestId: 'reqA', approve: true });
 
+    await w.ok('don1', 'support.create', { category: 'other', subject: 'Question', message: 'A question before I leave.' });
+
     // A donor deleting their account steps back from the pending offer.
     await w.ok('don1', 'account.delete', { confirm: true });
+    expect(w.rows('support_tickets').some((t) => t.userId === 'don1')).toBe(false);
     expect(w.users.map.has('don1')).toBe(false);
     expect(w.rows('profiles').some((p) => p.userId === 'don1')).toBe(false);
     expect(w.rows('donor_profiles').some((p) => p.donorId === 'don1')).toBe(false);

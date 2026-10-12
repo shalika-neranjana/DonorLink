@@ -63,6 +63,9 @@ export const adminService = {
   replyToTicket(ticketId: string, reply: string, status: SupportStatus = 'resolved') {
     return callApi<{ ticket: SupportTicket }>('support.reply', { ticketId, reply, status });
   },
+  deleteTicket(ticketId: string) {
+    return callApi<{ deleted: true; ticketId: string }>('support.delete', { ticketId });
+  },
   runMaintenance() {
     return callApi<{ expired: number; checked: number }>('maintenance.run');
   },

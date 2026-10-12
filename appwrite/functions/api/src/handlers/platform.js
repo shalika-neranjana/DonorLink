@@ -1,6 +1,6 @@
 const { ID, Query } = require('node-appwrite');
 const domain = require('../lib/domain');
-const { validation, notFound } = require('../lib/errors');
+const { validation, notFound, conflict } = require('../lib/errors');
 const { audit, notify, ownerReadPerms, requireAdmin, requireFields, iso } = require('../lib/context');
 const { expireRequest } = require('./request');
 
@@ -17,6 +17,36 @@ async function createTicket(ctx, payload) {
   );
   await audit(ctx, 'support.created', 'support_ticket', ticket.$id, 'Support request created');
   return { ticket };
+}
+
+/** Tickets are only visible to their owner and admins; anyone else gets a plain "not found". */
+async function ownedTicket(ctx, ticketId, { allowAdmin = false } = {}) {
+  const ticket = await ctx.store.get('support_tickets', ticketId);
+  if (!ticket || (ticket.userId !== ctx.userId && !(allowAdmin && ctx.isAdmin))) throw notFound('Ticket not found.');
+  return ticket;
+}
+
+/** Owners can fix a typo or add detail until support has picked the ticket up. */
+async function updateTicket(ctx, payload) {
+  requireFields(payload, ['ticketId']);
+  const ticket = await ownedTicket(ctx, payload.ticketId);
+  if (!domain.canEditTicket(ticket)) {
+    throw conflict('ticket_locked', 'Support has already picked this up, so it can no longer be edited.');
+  }
+  const result = domain.validateSupportTicket(payload);
+  if (!result.ok) throw validation(result.errors);
+  const updated = await ctx.store.update('support_tickets', ticket.$id, result.value);
+  await audit(ctx, 'support.updated', 'support_ticket', ticket.$id, 'Support request edited');
+  return { ticket: updated };
+}
+
+/** Owners can withdraw their own ticket; admins can remove any (spam, duplicates). */
+async function deleteTicket(ctx, payload) {
+  requireFields(payload, ['ticketId']);
+  const ticket = await ownedTicket(ctx, payload.ticketId, { allowAdmin: true });
+  await ctx.store.remove('support_tickets', ticket.$id);
+  await audit(ctx, 'support.deleted', 'support_ticket', ticket.$id, ctx.userId === ticket.userId ? 'Support request deleted by owner' : 'Support request deleted by admin');
+  return { deleted: true, ticketId: ticket.$id };
 }
 
 async function replyTicket(ctx, payload) {
@@ -78,4 +108,4 @@ async function runMaintenance(ctx) {
   return { expired, checked: stale.length };
 }
 
-module.exports = { createTicket, replyTicket, markRead, markAllRead, runMaintenance };
+module.exports = { createTicket, updateTicket, deleteTicket, replyTicket, markRead, markAllRead, runMaintenance };

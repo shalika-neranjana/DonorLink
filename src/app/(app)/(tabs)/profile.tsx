@@ -71,8 +71,8 @@ export default function ProfileScreen() {
 
       <DonorLinkSection title="Trust & verification">
         <DonorLinkListGroup>
-          <DonorLinkListRow icon="shield-checkmark" title="Verification" subtitle="Identity and donor status" trailing={<VerificationBadge status={verification} size="sm" />} onPress={() => router.push('/verification')} />
-          <DonorLinkListRow icon="mail" title="Email" value={emailVerified ? 'Verified' : 'Not verified'} onPress={() => router.push('/verification/email')} last />
+          <DonorLinkListRow icon="shield-checkmark" title="Verification" subtitle="Identity and donor status" trailing={<VerificationBadge status={verification} size="sm" />} onPress={() => router.push('/verification')} last={emailVerified} />
+          {!emailVerified ? <DonorLinkListRow icon="mail" title="Email" value="Not verified" onPress={() => router.push('/verification/email')} last /> : null}
         </DonorLinkListGroup>
       </DonorLinkSection>
 
